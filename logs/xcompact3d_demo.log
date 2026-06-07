@@ -1,0 +1,109 @@
+Script started on 2026-06-06 22:59:40+08:00 [<not executed on terminal>]
+    Evaluating External Test Dependencies ..................................
+
+Phoronix Test Suite v10.8.6
+
+    Installed:     pts/incompact3d-2.1.1
+
+
+Xcompact3d Incompact3d 5.0:
+    pts/incompact3d-2.1.1
+    Processor Test Configuration
+    Using Pre-Set Run Option: Cavity
+
+System Information
+
+
+PROCESSOR:                2 x Intel Xeon Gold 6326 @ 3.50GHz
+    Core Count:           32                      
+    Thread Count:         64                      
+    Extensions:           SSE 4.2                 
+                          + AVX512_VNNI           
+                          + AVX512CD              
+                          + AVX2                  
+                          + AVX                   
+                          + RDRAND                
+                          + FSGSBASE              
+    Cache Size:           48 MB                   
+    Microcode:            0xd000375               
+    Core Family:          Ice Lake                
+    Scaling Driver:       intel_cpufreq schedutil 
+
+GRAPHICS:                 ASPEED 24GB
+    BAR1 / Visible vRAM:  256 MiB          
+    Display Driver:       NVIDIA           
+    Screen:               1024x768         
+
+MOTHERBOARD:              SuperCloud R8428 G12 X12DPG-OA6 v1.01
+    BIOS Version:         1.4                                                    
+    Chipset:              Intel Device 0998                                      
+    Audio:                NVIDIA GA102 HD Audio                                  
+    Network:              2 x Intel I350 + 2 x Intel 82599ES 10-Gigabit SFI/SFP+ 
+
+MEMORY:                   24 x 32GB DDR4-3200MT/s
+
+DISK:                     960GB INTEL SSDSC2KB96
+                      + 4000GB MR9361-8i
+                      + 12001GB MR9361-8i
+                      + 240GB KINGSTON SA400S3
+    File-System:          ext4                          
+    Mount Options:        errors=remount-ro relatime rw 
+    Disk Scheduler:       MQ-DEADLINE                   
+    Disk Details:         Block Size: 4096              
+
+OPERATING SYSTEM:         Ubuntu 22.04
+    Kernel:               6.8.0-79-generic (x86_64)                                                                                                                  
+    Display Server:       X Server 1.20.13                                                                                                                           
+    Compiler:             GCC 12.3.0 + Clang 14.0.0-1ubuntu1.1 + LLVM 14.0.0 + CUDA 13.2                                                                             
+    Security:             gather_data_sampling: Vulnerable: No microcode                                                                                             
+                          + itlb_multihit: Not affected                                                                                                              
+                          + l1tf: Not affected                                                                                                                       
+                          + mds: Not affected                                                                                                                        
+                          + meltdown: Not affected                                                                                                                   
+                          + mmio_stale_data: Mitigation of Clear buffers; SMT vulnerable                                                                             
+                          + reg_file_data_sampling: Not affected                                                                                                     
+                          + retbleed: Not affected                                                                                                                   
+                          + spec_rstack_overflow: Not affected                                                                                                       
+                          + spec_store_bypass: Mitigation of SSB disabled via prctl                                                                                  
+                          + spectre_v1: Mitigation of usercopy/swapgs barriers and __user pointer sanitization                                                       
+                          + spectre_v2: Mitigation of Enhanced / Automatic IBRS; IBPB: conditional; RSB filling; PBRSB-eIBRS: SW sequence; BHI: SW loop KVM: SW loop 
+                          + srbds: Not affected                                                                                                                      
+                          + tsx_async_abort: Not affected                                                                                                            
+
+
+        [Performance Tip] The CPU scaling governor is currently not set to
+        performance. It's possible to obtain greater performance if using
+        the performance governor.
+
+        To change behavior, run: 
+
+        echo performance | tee
+        /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+
+        Reference:
+        https://openbenchmarking.org/result/1706268-TR-CPUGOVERN32
+
+
+Xcompact3d Incompact3d 5.0:
+    pts/incompact3d-2.1.1 [Input: Cavity]
+    Test 1 of 1
+    Estimated Trial Run Count:    3                     
+    Estimated Time To Completion: 7 Minutes [10:05 CDT] 
+        Started Run 1 @ 09:59:45
+        Started Run 2 @ 10:18:00
+        Started Run 3 @ 10:34:47
+        Started Run 4 @ 10:49:58 *
+
+    Input: Cavity:
+        874.657166
+        867.420105
+        831.54187
+        842.703491
+
+    Average: 854.080658 Seconds
+    Deviation: 2.38%
+    Samples: 4
+
+
+
+Script done on 2026-06-07 00:05:52+08:00 [COMMAND_EXIT_CODE="0"]

@@ -1,0 +1,225 @@
+
+ POT3D Version 4.6.4, updated on 03/25/2026
+
+ Compiler:
+ GCC version 11.4.0
+
+ Compiler Flags:
+ -I /usr/include/hdf5/openmpi -I . -I /usr/lib/x86_64-linux-gnu/openmpi/lib/../../fortran/gfortran-mod-15/openmpi -I /usr/lib/x86_64-linux-gnu/openmpi/lib -march=icelake-server -mmmx -mpopcnt -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2 -mno-sse4a -mno-fma4 -mno-xop -mfma -mavx512f -mbmi -mbmi2 -maes -mpclmul -mavx512vl -mavx512bw -mavx512dq -mavx512cd -mno-avx512er -mno-avx512pf -mavx512vbmi -mavx512ifma -mno-avx5124vnniw -mno-avx5124fmaps -mavx512vpopcntdq -mavx512vbmi2 -mgfni -mvpclmulqdq -mavx512vnni -mavx512bitalg -mno-avx512bf16 -mno-avx512vp2intersect -mno-3dnow -madx -mabm -mno-cldemote -mclflushopt -mclwb -mno-clzero -mcx16 -mno-enqcmd -mf16c -mfsgsbase -mfxsr -mno-hle -msahf -mno-lwp -mlzcnt -mmovbe -mno-movdir64b -mno-movdiri -mno-mwaitx -mpconfig -mpku -mno-prefetchwt1 -mprfchw -mno-ptwrite -mrdpid -mrdrnd -mrdseed -mno-rtm -mno-serialize -msgx -msha -mno-shstk -mno-tbm -mno-tsxldtrk -mvaes -mno-waitpkg -mwbnoinvd -mxsave -mxsavec -mxsaveopt -mxsaves -mno-amx-tile -mno-amx-int8 -mno-a
+
+ ### COMMENT from CHECK_INPUT:
+ ### Field solve type:
+
+ OPTION = ss              
+
+ Total number of MPI ranks =            4
+
+ Number of MPI ranks in r =            1
+ Number of MPI ranks in t =            1
+ Number of MPI ranks in p =            4
+
+ Global mesh dimension in r =          173
+ Global mesh dimension in t =          361
+ Global mesh dimension in p =         1171
+
+ Average # of r mesh pts per rank =  173.0
+ Average # of t mesh pts per rank =  361.0
+ Average # of p mesh pts per rank =  292.8
+
+ Estimated load imbalance =   0.34 %
+
+ ### COMMENT from READBR:
+ ### Reading Br file: br_input_small.h5
+
+ ### COMMENT from READBR:
+ ### Computed flux balance:
+
+ Positive flux =    40.840678534187191     
+ Negative flux =   -42.213828512543628     
+
+ ### COMMENT from READBR:
+ ### Flux balance correction:
+
+ BR00 (monopole Br field magnitude) =  -0.10927145466688354     
+
+ ### COMMENT from POT3D:
+ ### Starting PCG solve.
+
+ Iteration:        0   Residual:   1.000000000000000E+00
+ Iteration:      100   Residual:   7.880816330012769E-02
+ Iteration:      200   Residual:   2.625486383209732E-02
+ Iteration:      300   Residual:   1.384459500059826E-02
+ Iteration:      400   Residual:   8.234965132611833E-03
+ Iteration:      500   Residual:   4.190287792644016E-03
+ Iteration:      600   Residual:   2.472026045839108E-03
+ Iteration:      700   Residual:   1.707811483727846E-03
+ Iteration:      800   Residual:   1.620414073681537E-03
+ Iteration:      900   Residual:   1.403292671074734E-03
+ Iteration:     1000   Residual:   1.533074044874112E-03
+ Iteration:     1100   Residual:   1.768210278403848E-03
+ Iteration:     1200   Residual:   1.789173039552110E-03
+ Iteration:     1300   Residual:   1.681039622725692E-03
+ Iteration:     1400   Residual:   1.265061229327556E-03
+ Iteration:     1500   Residual:   1.129639569196919E-03
+ Iteration:     1600   Residual:   7.548063048899171E-04
+ Iteration:     1700   Residual:   7.126244267072821E-04
+ Iteration:     1800   Residual:   4.230629671546030E-04
+ Iteration:     1900   Residual:   4.190227851936127E-04
+ Iteration:     2000   Residual:   3.543846475105551E-04
+ Iteration:     2100   Residual:   4.571974057320007E-04
+ Iteration:     2200   Residual:   3.422852698247807E-04
+ Iteration:     2300   Residual:   2.631819604950280E-04
+ Iteration:     2400   Residual:   3.032372983081399E-04
+ Iteration:     2500   Residual:   3.004762759141036E-04
+ Iteration:     2600   Residual:   2.569272794405351E-04
+ Iteration:     2700   Residual:   1.611045996213326E-04
+ Iteration:     2800   Residual:   1.429006019323225E-04
+ Iteration:     2900   Residual:   1.395094157780518E-04
+ Iteration:     3000   Residual:   1.045895960557176E-04
+ Iteration:     3100   Residual:   8.734511973466357E-05
+ Iteration:     3200   Residual:   8.172838052641099E-05
+ Iteration:     3300   Residual:   8.024955476129151E-05
+ Iteration:     3400   Residual:   8.555276159965331E-05
+ Iteration:     3500   Residual:   7.154583687404385E-05
+ Iteration:     3600   Residual:   5.570865927516346E-05
+ Iteration:     3700   Residual:   3.538989203182990E-05
+ Iteration:     3800   Residual:   3.210528872257971E-05
+ Iteration:     3900   Residual:   2.926460655618534E-05
+ Iteration:     4000   Residual:   2.446024863868745E-05
+ Iteration:     4100   Residual:   2.335557242439643E-05
+ Iteration:     4200   Residual:   2.544745490978666E-05
+ Iteration:     4300   Residual:   2.402607561520580E-05
+ Iteration:     4400   Residual:   1.435692666182625E-05
+ Iteration:     4500   Residual:   8.831359554770722E-06
+ Iteration:     4600   Residual:   8.643896544100537E-06
+ Iteration:     4700   Residual:   7.833947054344641E-06
+ Iteration:     4800   Residual:   8.128563985758319E-06
+ Iteration:     4900   Residual:   7.095105727361789E-06
+ Iteration:     5000   Residual:   6.426993352880870E-06
+ Iteration:     5100   Residual:   4.953936066555779E-06
+ Iteration:     5200   Residual:   3.425804912940038E-06
+ Iteration:     5300   Residual:   2.765401777845965E-06
+ Iteration:     5400   Residual:   2.214148083813039E-06
+ Iteration:     5500   Residual:   2.094227587661705E-06
+ Iteration:     5600   Residual:   2.308183147204570E-06
+ Iteration:     5700   Residual:   1.892710243532938E-06
+ Iteration:     5800   Residual:   1.415973021925562E-06
+ Iteration:     5900   Residual:   1.250756229094830E-06
+ Iteration:     6000   Residual:   8.699932965991471E-07
+ Iteration:     6100   Residual:   6.419252829906296E-07
+ Iteration:     6200   Residual:   6.171113891964319E-07
+ Iteration:     6300   Residual:   6.238800473558540E-07
+ Iteration:     6400   Residual:   5.839222430830306E-07
+ Iteration:     6500   Residual:   3.826247091687412E-07
+ Iteration:     6600   Residual:   3.116897706005720E-07
+ Iteration:     6700   Residual:   2.424674051839428E-07
+ Iteration:     6800   Residual:   2.269959242710852E-07
+ Iteration:     6900   Residual:   2.002866303880283E-07
+ Iteration:     7000   Residual:   1.672486725409887E-07
+ Iteration:     7100   Residual:   1.553071175035159E-07
+ Iteration:     7200   Residual:   1.076379710484184E-07
+ Iteration:     7300   Residual:   9.038051100561294E-08
+ Iteration:     7400   Residual:   7.587567263276110E-08
+ Iteration:     7500   Residual:   7.099298014536192E-08
+ Iteration:     7600   Residual:   5.326097934938283E-08
+ Iteration:     7700   Residual:   4.913598683867928E-08
+ Iteration:     7800   Residual:   4.786922544397566E-08
+ Iteration:     7900   Residual:   2.944090682903046E-08
+ Iteration:     8000   Residual:   3.166964645796259E-08
+ Iteration:     8100   Residual:   2.274319917031464E-08
+ Iteration:     8200   Residual:   1.948645964701557E-08
+ Iteration:     8300   Residual:   2.116916782027708E-08
+ Iteration:     8400   Residual:   1.802224554381148E-08
+ Iteration:     8500   Residual:   1.658110265692804E-08
+ Iteration:     8600   Residual:   1.210599712250283E-08
+ Iteration:     8700   Residual:   1.026246409946908E-08
+ Iteration:     8800   Residual:   9.861655697366270E-09
+ Iteration:     8900   Residual:   1.054468320786255E-08
+ Iteration:     9000   Residual:   1.058767676781042E-08
+ Iteration:     9100   Residual:   8.216509008042587E-09
+ Iteration:     9200   Residual:   6.598795997817839E-09
+ Iteration:     9300   Residual:   6.556132433491915E-09
+ Iteration:     9400   Residual:   5.624907925016856E-09
+ Iteration:     9500   Residual:   5.512932792544626E-09
+ Iteration:     9600   Residual:   5.715421708978785E-09
+ Iteration:     9700   Residual:   4.141705289506463E-09
+ Iteration:     9800   Residual:   3.004173852461375E-09
+ Iteration:     9900   Residual:   2.581901964908622E-09
+ Iteration:    10000   Residual:   2.837936398740212E-09
+ Iteration:    10100   Residual:   2.512387779259289E-09
+ Iteration:    10200   Residual:   2.080384951245691E-09
+ Iteration:    10300   Residual:   1.424051246937132E-09
+ Iteration:    10400   Residual:   1.078848965612260E-09
+ Iteration:    10500   Residual:   1.042011618533300E-09
+ Iteration:    10600   Residual:   7.892899255957043E-10
+ Iteration:    10700   Residual:   7.413489241931719E-10
+ Iteration:    10800   Residual:   7.545041314355288E-10
+ Iteration:    10900   Residual:   5.040586570879260E-10
+ Iteration:    11000   Residual:   2.970937370046584E-10
+ Iteration:    11100   Residual:   3.013976568526852E-10
+ Iteration:    11200   Residual:   2.824815619557425E-10
+ Iteration:    11300   Residual:   2.057409121592820E-10
+ Iteration:    11400   Residual:   1.862335975085574E-10
+ Iteration:    11500   Residual:   1.347199357446481E-10
+ Iteration:    11600   Residual:   9.688612446716033E-11
+ Iteration:    11700   Residual:   1.067624346067470E-10
+ Iteration:    11800   Residual:   8.744467519511648E-11
+ Iteration:    11900   Residual:   6.728529076152799E-11
+ Iteration:    12000   Residual:   4.910734757126162E-11
+ Iteration:    12100   Residual:   3.575223132304151E-11
+ Iteration:    12200   Residual:   3.328952415599248E-11
+ Iteration:    12300   Residual:   2.767780386831575E-11
+ Iteration:    12400   Residual:   2.375853746607374E-11
+ Iteration:    12500   Residual:   1.887604711176973E-11
+ Iteration:    12600   Residual:   1.271485714926222E-11
+ Iteration:    12700   Residual:   1.123100129398726E-11
+ Iteration:    12800   Residual:   9.911428355989747E-12
+ Iteration:    12900   Residual:   8.324639505040598E-12
+ Iteration:    13000   Residual:   6.480938342881528E-12
+ Iteration:    13100   Residual:   4.954460620042269E-12
+ Iteration:    13200   Residual:   3.739075794861428E-12
+ Iteration:    13300   Residual:   3.299254609120728E-12
+ Iteration:    13400   Residual:   2.581566944632767E-12
+ Iteration:    13500   Residual:   2.401426077422937E-12
+ Iteration:    13600   Residual:   1.981488214816005E-12
+ Iteration:    13700   Residual:   1.542052223371204E-12
+ Iteration:    13799   Residual:   9.980334314996818E-13
+
+ ### COMMENT from SOLVE:
+ ### The field solver converged.
+ Number of iterations =        13799
+
+ ### COMMENT from GETB:
+ ### Magnetic energy diagnostic:
+
+Energy in Br**2 = 5.98186158E+01
+Energy in Bt**2 = 2.19454290E+01
+Energy in Bp**2 = 3.27180068E+01
+Magnetic energy = 1.14482052E+02
+
+ Total time:                3346.882166
+ Max Comm/Imbalance time:    138.011392
+
+	Command being timed: "mpirun -np 4 ./pot3d pot3d.dat"
+	User time (seconds): 13364.13
+	System time (seconds): 23.26
+	Percent of CPU this job got: 399%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 55:47.37
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2355156
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 4409463
+	Voluntary context switches: 6943
+	Involuntary context switches: 26276
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 2472
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

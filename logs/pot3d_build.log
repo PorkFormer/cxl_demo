@@ -1,0 +1,13 @@
+Script started on 2026-06-07 00:06:39+08:00 [<not executed on terminal>]
+[32m=== STARTING POT3D BUILD ===[0m
+==> Entering src directory...
+==> Removing old Makefile...
+==> Generating Makefile from Makefile.template...
+==> Compiling code...
+==> Moving pot3d executable to: /home/lxy/cxl_demo/src/POT3D/bin/pot3d
+mv pot3d ../bin/
+[32m==> Build complete![0m
+    Please add the following to your shell startup (e.g. .bashrc, .profile, etc.):
+[1;96m    export PATH=/home/lxy/cxl_demo/src/POT3D/bin:$PATH[0m
+
+Script done on 2026-06-07 00:06:49+08:00 [COMMAND_EXIT_CODE="0"]

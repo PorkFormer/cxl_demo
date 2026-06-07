@@ -1,0 +1,111 @@
+!
+! ### INPUT PARAMETER OPTIONS FOR POT3D ###
+! ### THIS FILE IS A VALID POT3D.DAT INPUT FILE! ###
+!
+ &topology
+!
+  nr=133                      ! Grid resolution in the `r` direction.
+  nt=181                      ! Grid resolution in the `theta` direction.
+  np=451                      ! Grid resolution in the `phi` direction.
+ /
+!
+ &inputvars
+!
+! ****** Run type.
+!
+  option='ss'                 !  'ss'        Potential Field Source Surface (PFSS)
+                              !  'potential' Potential Field with a closed-wall outer
+                              !              boundary condition (requires flux balance).
+                              !  'open'      Open field.  Used for current sheet (CS)
+                              !              and fully open field runs.
+                              !              Note! Resulting B field will be unsigned.
+  validation_run=.false.      !  Set this to run a validation test with an analytic tilted 
+                              !  dipole solution. This overrides other inputs.
+  dipole_angle=0.7853981633974483  !  Angle to tilt dipole in validation run.
+!
+! ****** Input options.
+!
+  br0file='br_input.h5'       ! Filename (HDF5) of the input 2D (theta,phi) Br magnetic field at r0.
+!
+  phishift=0.0                ! Apply an optional phi shift (radians) to the input Br field at r0.
+!
+  do_not_balance_flux=.false. ! Choose whether or not to balance the flux of the input Br at r0.
+                              !   .false.   Balance the flux (additive)
+                              !   .true.    Do not balance the flux.
+                              !             Note! Cannot use with option=`closed`!
+!
+! ****** Domain (radial).
+!
+  r0=1.0                      ! Coordinate of the lower radial boundary.
+  r1=2.5                      ! Coordinate of the upper radial boundary.
+!
+! ****** Grid cell size specifications.
+!
+  rfrac=0.0,1.0               ! Normalized positions of grid segment boundaries
+                              ! (as a fraction of domain size) for radial grid.
+!
+  drratio=2.5                 ! Ratio of grid spacing at the end of each segment to that
+                              ! at the beginning for the radial grid
+                              ! [ length(drratio) = length(rfrac)-1 ].
+!
+  nfrmesh=0                   ! Number of times to filter/smooth the radial grid spacing.
+!
+  tfrac=0.0,1.0               ! Normalized positions of grid segment boundaries
+                              ! (as a fraction of domain size) for theta grid.
+!
+  dtratio=1.0                 ! Ratio of grid spacing at the end of each segment to that
+                              ! at the beginning for the theta grid
+                              ! [ length(dtratio) = length(tfrac)-1 ].
+!
+  nftmesh=0                   ! Number of times to filter/smooth the theta grid spacing.
+!
+  pfrac=0.0,1.0               ! Normalized positions of grid segment boundaries
+                              ! (as a fraction of domain size) for phi grid.
+!
+  dpratio=1.0                 ! Ratio of grid spacing at the end of each segment to that
+                              ! at the beginning for the phi grid
+                              ! [ length(dtratio) = length(tfrac)-1 ].
+!
+  nfpmesh=0                   ! Number of times to filter/smooth the phi grid spacing.
+!
+! ****** Output options.
+!
+!   Note!  For all output filenames, set to '' to not write the output.
+!
+  brfile='br_pfss.h5'         ! Filename to write 3D Br field.
+!
+  btfile='bt_pfss.h5'         ! Filename to write 3D Bt field.
+!
+  bpfile='bp_pfss.h5'         ! Filename to write 3D Bp field.
+!
+  br_photo_file=''            ! Filename to write 2D Br@r=r0 (after interp/flux-balance).
+!
+  br_photo_original_file=''   ! Filename to write 2D Br@r=r0 (option='open' only,
+                              !                               writes Br before sign change).
+!
+  phifile=''                  ! Filename to write 3D PHI potential.
+!
+  hdf32=.false.               ! Output precision:
+                              !   .true.   Single-precision (32-bit) output.
+                              !   .false.  Double-precision (64-bit) output.
+!
+! ****** Solver options.
+!
+  ifprec=2                    ! Preconditioner method:
+                              !   1    Diagonal (use for GPU runs)
+                              !   2    ILUB0    (use for CPU runs or GPU runs when built with cuSparse)
+!
+  epscg=1.e-9                 ! Solver convergence tolerance, |residual|/|right-hand-side|.
+!
+  ncghist=0                   ! Iteration information.
+                              !   0    Only writes out total iteration number.
+                              !   >0   Writes out every NCGHIST iteration residual.
+!
+  ncgmax=1000000              ! Maximum solver iterations.
+                              ! If solver does not converge in ncgmax iterations,
+                              ! the code will exit with an error.
+!
+! ****** Debugging flag.
+!
+  idebug=0                    ! Output various debugging information during run.
+

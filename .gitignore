@@ -1,0 +1,4 @@
+.agents/
+.codex/
+.pot3d_git_metadata/
+logs/*.rerun.log

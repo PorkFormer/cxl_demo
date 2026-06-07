@@ -1,0 +1,93 @@
+Script started on 2026-06-07 00:06:59+08:00 [<not executed on terminal>]
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   _____   ____ _______ ____  _____                                   
+  |  __ \ / __ \__   __|___ \|  __ \                                  
+  | |__) | |  | | | |    __) | |  | |                                 
+  |  ___/| |  | | | |   |__ <| |  | |                                 
+  | |    | |__| | | |   ___) | |__| |                                 
+  |_|     \____/  |_|  |____/|_____/                                  
+  ___ ____ ____ ___    ____ _  _ _ ___ ____                           
+   |  |___ [__   |     [__  |  | |  |  |___                           
+   |  |___ ___]  |     ___] |__| |  |  |___                           
+                                                                      
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Welcome to the POT3D test suite!
+Checking file structure...
+==> Checking PATH....
+==> Everything seems OK to run POT3D test suite!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+STARTING TEST potential_field_source_surface
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+==> Gathering test information...
+==> Copying input files...
+=======================================================
+==> RUNNING POT3D
+=======================================================
+==> Running pot3d with command:
+==> mpirun -np 4 pot3d pot3d.dat 1>pot3d.log 2>pot3d.err
+==> Test completed in:                 36.884 seconds.
+==> Speedup compared to reference run:  0.11 x
+=======================================================
+==> COMPARING RUN DATA TO REFERENCE DATA
+=======================================================
+==> Running comparison...
+==> Test seems to have PASSED!
+=======================================================
+==> CLEANING RUN DATA
+=======================================================
+==> Removing files from run data...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+STARTING TEST potential_field_current_sheet
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+==> Gathering test information...
+==> Copying input files...
+=======================================================
+==> RUNNING POT3D
+=======================================================
+==> Running pot3d with command:
+==> mpirun -np 4 pot3d pot3d.dat 1>pot3d.log 2>pot3d.err
+==> Test completed in:                 85.229 seconds.
+==> Speedup compared to reference run:  0.10 x
+=======================================================
+==> COMPARING RUN DATA TO REFERENCE DATA
+=======================================================
+==> Running comparison...
+==> Test seems to have PASSED!
+=======================================================
+==> CLEANING RUN DATA
+=======================================================
+==> Removing files from run data...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+STARTING TEST open_field
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+==> Gathering test information...
+==> Copying input files...
+=======================================================
+==> RUNNING POT3D
+=======================================================
+==> Running pot3d with command:
+==> mpirun -np 4 pot3d pot3d.dat 1>pot3d.log 2>pot3d.err
+==> Test completed in:                116.180 seconds.
+==> Speedup compared to reference run:  0.09 x
+=======================================================
+==> COMPARING RUN DATA TO REFERENCE DATA
+=======================================================
+==> Running comparison...
+==> Test seems to have PASSED!
+=======================================================
+==> CLEANING RUN DATA
+=======================================================
+==> Removing files from run data...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+===========================================================================
+Summary of test results:
+===========================================================================
+Test name                            PASS/FAIL  Run-time  Ref-time  Speedup
+===========================================================================
+potential_field_source_surface       PASS         36.884     4.053     0.11
+potential_field_current_sheet        PASS         85.229     8.368     0.10
+open_field                           PASS        116.180    10.777     0.09
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Script done on 2026-06-07 00:10:59+08:00 [COMMAND_EXIT_CODE="0"]
