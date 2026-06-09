@@ -1,0 +1,65 @@
+{
+  "auc": 0.8216797614062472,
+  "data_path": "/tmp/cxl_xgboost_higgs/HIGGS.csv.gz",
+  "data_sha256": "ea302c18164d4e3d916a1e2e83a9a8d07069fa6ebc7771e4c0540d54e593b698",
+  "feature_count": 28,
+  "learning_rate": 0.1,
+  "load_seconds": 34.06767542398302,
+  "max_bin": 256,
+  "max_depth": 10,
+  "params": {
+    "device": "cpu",
+    "eta": 0.1,
+    "eval_metric": "auc",
+    "max_bin": 256,
+    "max_depth": 10,
+    "nthread": 16,
+    "objective": "binary:logistic",
+    "seed": 20260609,
+    "tree_method": "hist",
+    "verbosity": 1
+  },
+  "peak_rss_mib": 1441.48828125,
+  "rounds": 50,
+  "row_count": 2000000,
+  "seed": 20260609,
+  "test_rows": 400000,
+  "test_size": 0.2,
+  "threads": 16,
+  "total_seconds": 45.98622984299436,
+  "train_rows": 1600000,
+  "train_seconds": 5.728201535006519,
+  "versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.3.1",
+    "platform": "Linux-6.8.0-79-generic-x86_64-with-glibc2.35",
+    "psutil": "7.1.0",
+    "python": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
+    "python_executable": "/usr/bin/python3",
+    "sklearn": "1.7.2",
+    "xgboost": "3.1.2"
+  }
+}
+	Command being timed: "python3 scripts/run_xgboost_higgs_demo.py --data /tmp/cxl_xgboost_higgs/HIGGS.csv.gz --rows 2000000 --rounds 50 --threads 16 --max-depth 10 --output logs/xgboost_higgs_demo_metrics.json"
+	User time (seconds): 110.82
+	System time (seconds): 24.28
+	Percent of CPU this job got: 287%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:46.93
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1476084
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 58
+	Minor (reclaiming a frame) page faults: 416907
+	Voluntary context switches: 2451
+	Involuntary context switches: 339612
+	Swaps: 0
+	File system inputs: 1368
+	File system outputs: 16
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
