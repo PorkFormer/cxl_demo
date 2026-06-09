@@ -1,0 +1,116 @@
+26/06/09 16:42:38 INFO SparkContext: Running Spark version 3.5.0
+26/06/09 16:42:38 INFO SparkContext: OS info Linux, 6.8.0-79-generic, amd64
+26/06/09 16:42:38 INFO SparkContext: Java version 11.0.31
+26/06/09 16:42:38 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/06/09 16:42:38 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+26/06/09 16:42:38 INFO ResourceUtils: ==============================================================
+26/06/09 16:42:38 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/06/09 16:42:38 INFO ResourceUtils: ==============================================================
+26/06/09 16:42:38 INFO SparkContext: Submitted application: SparkMllibHiggsCachedRddDemo
+26/06/09 16:42:38 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 16384, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/06/09 16:42:38 INFO ResourceProfile: Limiting resource is cpu
+26/06/09 16:42:38 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/06/09 16:42:38 INFO SecurityManager: Changing view acls to: lxy
+26/06/09 16:42:38 INFO SecurityManager: Changing modify acls to: lxy
+26/06/09 16:42:38 INFO SecurityManager: Changing view acls groups to: 
+26/06/09 16:42:38 INFO SecurityManager: Changing modify acls groups to: 
+26/06/09 16:42:38 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: lxy; groups with view permissions: EMPTY; users with modify permissions: lxy; groups with modify permissions: EMPTY
+26/06/09 16:42:39 INFO Utils: Successfully started service 'sparkDriver' on port 45357.
+26/06/09 16:42:39 INFO SparkEnv: Registering MapOutputTracker
+26/06/09 16:42:39 INFO SparkEnv: Registering BlockManagerMaster
+26/06/09 16:42:39 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/06/09 16:42:39 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/06/09 16:42:39 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/06/09 16:42:39 INFO DiskBlockManager: Created local directory at /tmp/cxl_spark_mllib_tmp/blockmgr-3e381057-584a-4efc-9e68-d261ff017bf5
+26/06/09 16:42:39 INFO MemoryStore: MemoryStore started with capacity 19.0 GiB
+26/06/09 16:42:39 INFO SparkEnv: Registering OutputCommitCoordinator
+26/06/09 16:42:39 INFO Executor: Starting executor ID driver on host localhost
+26/06/09 16:42:39 INFO Executor: OS info Linux, 6.8.0-79-generic, amd64
+26/06/09 16:42:39 INFO Executor: Java version 11.0.31
+26/06/09 16:42:39 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+26/06/09 16:42:39 INFO Executor: Created or updated repl class loader org.apache.spark.util.MutableURLClassLoader@17b3704c for default.
+26/06/09 16:42:39 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 34715.
+26/06/09 16:42:39 INFO NettyBlockTransferService: Server created on localhost:34715
+26/06/09 16:42:39 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/06/09 16:42:39 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, localhost, 34715, None)
+26/06/09 16:42:39 INFO BlockManagerMasterEndpoint: Registering block manager localhost:34715 with 19.0 GiB RAM, BlockManagerId(driver, localhost, 34715, None)
+26/06/09 16:42:39 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, localhost, 34715, None)
+26/06/09 16:42:39 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, localhost, 34715, None)
+26/06/09 16:42:55 WARN BlockManager: Task 128 already completed, not releasing lock for rdd_2_0
+26/06/09 16:42:55 WARN BlockManager: Task 129 already completed, not releasing lock for rdd_2_0
+26/06/09 16:43:02 WARN Instrumentation: [2154dc3a] Initial coefficients will be ignored! Its dimensions (1, 28) did not match the expected size (1, 28)
+{
+  "algorithms": {
+    "logistic_regression": {
+      "error_count": 143644,
+      "error_rate": 0.35925459997649056,
+      "evaluation_seconds": 1.030797602958046,
+      "intercept": 0.0,
+      "model_weight_length": 28,
+      "name": "logistic_regression",
+      "params": {
+        "iterations": 30,
+        "optimizer": "LBFGS"
+      },
+      "training_seconds": 42.0328377999831
+    }
+  },
+  "data_path": "/tmp/cxl_xgboost_higgs/HIGGS.csv.gz",
+  "feature_count": 28,
+  "libsvm_path": "/tmp/cxl_spark_mllib_higgs/higgs_2000000_rows_28_features.libsvm",
+  "libsvm_reused": true,
+  "libsvm_sha256": "75fa9d571870ab2a320a264eeb6933fe609a6ee001ddc5cad70859e51e632a9a",
+  "master": "local[16]",
+  "materialize_seconds": 14.78005080204457,
+  "metadata_path": "/tmp/cxl_spark_mllib_higgs/higgs_2000000_rows_28_features.metadata.json",
+  "partition_count": 64,
+  "peak_rss_mib": 7472.87109375,
+  "preprocess_seconds": 3.1864259429858066,
+  "requested_partitions": 64,
+  "row_count": 2000000,
+  "seed": 20260609,
+  "source_sha256": "ea302c18164d4e3d916a1e2e83a9a8d07069fa6ebc7771e4c0540d54e593b698",
+  "spark": {
+    "java": "11.0.31",
+    "java_vendor": "Ubuntu",
+    "pyspark": "3.5.0",
+    "scala": "2.12.18",
+    "spark": "3.5.0"
+  },
+  "storage_level": "MEMORY_ONLY",
+  "test_count": 399839,
+  "test_fraction": 0.2,
+  "test_partitions": 64,
+  "total_seconds": 64.40764347900404,
+  "train_count": 1600161,
+  "train_partitions": 64,
+  "versions": {
+    "platform": "Linux-6.8.0-79-generic-x86_64-with-glibc2.35",
+    "python": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
+    "python_executable": "/usr/bin/python3"
+  },
+  "work_dir": "/tmp/cxl_spark_mllib_higgs"
+}
+	Command being timed: "/home/lxy/.phoronix-test-suite/installed-tests/pts/spark-tpch-1.0.0/spark-3.5.0-bin-hadoop3/bin/spark-submit --master local[16] --driver-memory 32g --conf spark.ui.enabled=false --conf spark.local.dir=/tmp/cxl_spark_mllib_tmp scripts/run_spark_mllib_higgs_logreg.py --data /tmp/cxl_xgboost_higgs/HIGGS.csv.gz --rows 2000000 --partitions 64 --iterations 30 --output logs/spark_mllib_higgs_logreg_metrics.json"
+	User time (seconds): 436.40
+	System time (seconds): 1765.58
+	Percent of CPU this job got: 3289%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:06.94
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 6248312
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 4237103
+	Voluntary context switches: 342549
+	Involuntary context switches: 1003847075
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 48
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

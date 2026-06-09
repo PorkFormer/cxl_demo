@@ -1,0 +1,52 @@
+{
+  "algorithms": {
+    "linear_svm": {
+      "error_count": 170508,
+      "error_rate": 0.4264416427612114,
+      "evaluation_seconds": 1.0063040729728527,
+      "intercept": 0.0,
+      "model_weight_length": 28,
+      "name": "linear_svm",
+      "params": {
+        "iterations": 30,
+        "optimizer": "SGD"
+      },
+      "training_seconds": 8.25822357099969
+    }
+  },
+  "data_path": "/tmp/cxl_xgboost_higgs/HIGGS.csv.gz",
+  "feature_count": 28,
+  "libsvm_path": "/tmp/cxl_spark_mllib_higgs/higgs_2000000_rows_28_features.libsvm",
+  "libsvm_reused": true,
+  "libsvm_sha256": "75fa9d571870ab2a320a264eeb6933fe609a6ee001ddc5cad70859e51e632a9a",
+  "master": "local[16]",
+  "materialize_seconds": 14.892617467965465,
+  "metadata_path": "/tmp/cxl_spark_mllib_higgs/higgs_2000000_rows_28_features.metadata.json",
+  "partition_count": 64,
+  "peak_rss_mib": 5679.91015625,
+  "preprocess_seconds": 3.20550133503275,
+  "requested_partitions": 64,
+  "row_count": 2000000,
+  "seed": 20260609,
+  "source_sha256": "ea302c18164d4e3d916a1e2e83a9a8d07069fa6ebc7771e4c0540d54e593b698",
+  "spark": {
+    "java": "11.0.31",
+    "java_vendor": "Ubuntu",
+    "pyspark": "3.5.0",
+    "scala": "2.12.18",
+    "spark": "3.5.0"
+  },
+  "storage_level": "MEMORY_ONLY",
+  "test_count": 399839,
+  "test_fraction": 0.2,
+  "test_partitions": 64,
+  "total_seconds": 30.64901575096883,
+  "train_count": 1600161,
+  "train_partitions": 64,
+  "versions": {
+    "platform": "Linux-6.8.0-79-generic-x86_64-with-glibc2.35",
+    "python": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
+    "python_executable": "/usr/bin/python3"
+  },
+  "work_dir": "/tmp/cxl_spark_mllib_higgs"
+}
