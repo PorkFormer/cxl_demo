@@ -1,0 +1,341 @@
+{
+  "bootstrap_stage": "cts",
+  "commands": {
+    "bootstrap": "docker run --rm --name cxl-openroad-orfs-routing-cts-2557548-1781007944 --memory 64g -e OPENROAD_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad -e OPENSTA_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta -e YOSYS_EXE=/usr/local/bin/yosys -v /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts:/work/OpenROAD-flow-scripts -w /work/OpenROAD-flow-scripts openroad/orfs make -C flow DESIGN_CONFIG=designs/nangate45/aes/config.mk cts",
+    "timed": "/usr/bin/time -v docker run --rm --name cxl-openroad-orfs-routing-do-route-2557548-1781007944 --memory 64g -e OPENROAD_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad -e OPENSTA_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta -e YOSYS_EXE=/usr/local/bin/yosys -v /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts:/work/OpenROAD-flow-scripts -w /work/OpenROAD-flow-scripts openroad/orfs make -C flow DESIGN_CONFIG=designs/nangate45/aes/config.mk do-route"
+  },
+  "container_peak_memory_mib": 4443.136,
+  "design_config": "designs/nangate45/aes/config.mk",
+  "docker": {
+    "image": "openroad/orfs",
+    "image_digest": "openroad/orfs@sha256:e4e71714221bbabba09242c03d3c093af07f6231d4a76de17ecc6408061c6802",
+    "memory": "64g",
+    "mode": "direct"
+  },
+  "docker_stats_samples": [
+    {
+      "memory_mib": 0.0,
+      "raw": "0B / 0B",
+      "timestamp_utc": "2026-06-09T12:27:53.401916+00:00"
+    },
+    {
+      "memory_mib": 131.4,
+      "raw": "131.4MiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:27:57.911400+00:00"
+    },
+    {
+      "memory_mib": 328.1,
+      "raw": "328.1MiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:00.458294+00:00"
+    },
+    {
+      "memory_mib": 417.2,
+      "raw": "417.2MiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:02.989301+00:00"
+    },
+    {
+      "memory_mib": 449.7,
+      "raw": "449.7MiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:05.517575+00:00"
+    },
+    {
+      "memory_mib": 449.2,
+      "raw": "449.2MiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:08.047126+00:00"
+    },
+    {
+      "memory_mib": 333.5,
+      "raw": "333.5MiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:10.580043+00:00"
+    },
+    {
+      "memory_mib": 387.9,
+      "raw": "387.9MiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:13.113879+00:00"
+    },
+    {
+      "memory_mib": 526.4,
+      "raw": "526.4MiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:15.643964+00:00"
+    },
+    {
+      "memory_mib": 575.7,
+      "raw": "575.7MiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:18.172449+00:00"
+    },
+    {
+      "memory_mib": 1253.376,
+      "raw": "1.224GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:20.698378+00:00"
+    },
+    {
+      "memory_mib": 1070.08,
+      "raw": "1.045GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:23.227548+00:00"
+    },
+    {
+      "memory_mib": 1486.848,
+      "raw": "1.452GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:25.757085+00:00"
+    },
+    {
+      "memory_mib": 1486.848,
+      "raw": "1.452GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:28.285643+00:00"
+    },
+    {
+      "memory_mib": 1428.48,
+      "raw": "1.395GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:30.813125+00:00"
+    },
+    {
+      "memory_mib": 1412.096,
+      "raw": "1.379GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:33.341279+00:00"
+    },
+    {
+      "memory_mib": 1841.152,
+      "raw": "1.798GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:35.869773+00:00"
+    },
+    {
+      "memory_mib": 1905.664,
+      "raw": "1.861GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:38.397915+00:00"
+    },
+    {
+      "memory_mib": 1906.688,
+      "raw": "1.862GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:40.925267+00:00"
+    },
+    {
+      "memory_mib": 2352.128,
+      "raw": "2.297GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:43.450446+00:00"
+    },
+    {
+      "memory_mib": 2406.4,
+      "raw": "2.35GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:45.976124+00:00"
+    },
+    {
+      "memory_mib": 2381.824,
+      "raw": "2.326GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:48.504260+00:00"
+    },
+    {
+      "memory_mib": 3148.8,
+      "raw": "3.075GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:51.027629+00:00"
+    },
+    {
+      "memory_mib": 3143.68,
+      "raw": "3.07GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:53.556425+00:00"
+    },
+    {
+      "memory_mib": 3092.48,
+      "raw": "3.02GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:56.083876+00:00"
+    },
+    {
+      "memory_mib": 3309.568,
+      "raw": "3.232GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:28:58.608895+00:00"
+    },
+    {
+      "memory_mib": 3374.08,
+      "raw": "3.295GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:01.137023+00:00"
+    },
+    {
+      "memory_mib": 3375.104,
+      "raw": "3.296GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:03.665887+00:00"
+    },
+    {
+      "memory_mib": 3653.632,
+      "raw": "3.568GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:06.193525+00:00"
+    },
+    {
+      "memory_mib": 3693.568,
+      "raw": "3.607GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:08.722944+00:00"
+    },
+    {
+      "memory_mib": 3684.352,
+      "raw": "3.598GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:11.249893+00:00"
+    },
+    {
+      "memory_mib": 3860.48,
+      "raw": "3.77GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:13.779555+00:00"
+    },
+    {
+      "memory_mib": 3900.416,
+      "raw": "3.809GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:16.309932+00:00"
+    },
+    {
+      "memory_mib": 3871.744,
+      "raw": "3.781GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:18.836475+00:00"
+    },
+    {
+      "memory_mib": 3948.544,
+      "raw": "3.856GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:21.360507+00:00"
+    },
+    {
+      "memory_mib": 3969.024,
+      "raw": "3.876GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:23.888404+00:00"
+    },
+    {
+      "memory_mib": 4049.92,
+      "raw": "3.955GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:26.410416+00:00"
+    },
+    {
+      "memory_mib": 4089.856,
+      "raw": "3.994GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:28.939987+00:00"
+    },
+    {
+      "memory_mib": 4081.664,
+      "raw": "3.986GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:31.469227+00:00"
+    },
+    {
+      "memory_mib": 4130.816,
+      "raw": "4.034GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:33.995043+00:00"
+    },
+    {
+      "memory_mib": 4129.792,
+      "raw": "4.033GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:36.521019+00:00"
+    },
+    {
+      "memory_mib": 4131.84,
+      "raw": "4.035GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:39.050782+00:00"
+    },
+    {
+      "memory_mib": 4131.84,
+      "raw": "4.035GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:41.579033+00:00"
+    },
+    {
+      "memory_mib": 4168.704,
+      "raw": "4.071GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:44.106516+00:00"
+    },
+    {
+      "memory_mib": 4182.016,
+      "raw": "4.084GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:46.634411+00:00"
+    },
+    {
+      "memory_mib": 4216.832,
+      "raw": "4.118GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:49.158470+00:00"
+    },
+    {
+      "memory_mib": 4282.368,
+      "raw": "4.182GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:51.685458+00:00"
+    },
+    {
+      "memory_mib": 4286.464,
+      "raw": "4.186GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:54.213378+00:00"
+    },
+    {
+      "memory_mib": 4369.408,
+      "raw": "4.267GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:56.740088+00:00"
+    },
+    {
+      "memory_mib": 4345.856,
+      "raw": "4.244GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:29:59.263741+00:00"
+    },
+    {
+      "memory_mib": 4355.072,
+      "raw": "4.253GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:30:01.790498+00:00"
+    },
+    {
+      "memory_mib": 4355.072,
+      "raw": "4.253GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:30:04.320048+00:00"
+    },
+    {
+      "memory_mib": 4355.072,
+      "raw": "4.253GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:30:06.846867+00:00"
+    },
+    {
+      "memory_mib": 4427.776,
+      "raw": "4.324GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:30:09.376216+00:00"
+    },
+    {
+      "memory_mib": 4443.136,
+      "raw": "4.339GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:30:11.903904+00:00"
+    },
+    {
+      "memory_mib": 4442.112,
+      "raw": "4.338GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:30:14.433342+00:00"
+    },
+    {
+      "memory_mib": 4442.112,
+      "raw": "4.338GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:30:16.961646+00:00"
+    },
+    {
+      "memory_mib": 4442.112,
+      "raw": "4.338GiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:30:19.489220+00:00"
+    },
+    {
+      "memory_mib": 141.0,
+      "raw": "141MiB / 64GiB",
+      "timestamp_utc": "2026-06-09T12:30:22.011880+00:00"
+    },
+    {
+      "memory_mib": 0.0,
+      "raw": "0B / 0B",
+      "timestamp_utc": "2026-06-09T12:30:24.716149+00:00"
+    }
+  ],
+  "error": null,
+  "exit_status": 0,
+  "full_command": "/usr/bin/time -v docker run --rm --name cxl-openroad-orfs-routing-do-route-2557548-1781007944 --memory 64g -e OPENROAD_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad -e OPENSTA_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta -e YOSYS_EXE=/usr/local/bin/yosys -v /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts:/work/OpenROAD-flow-scripts -w /work/OpenROAD-flow-scripts openroad/orfs make -C flow DESIGN_CONFIG=designs/nangate45/aes/config.mk do-route",
+  "orfs": {
+    "commit": "8abc6a9035ca36490a1577867addca732a87cee8",
+    "path": "/tmp/cxl_openroad_orfs/OpenROAD-flow-scripts",
+    "repo": "https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts.git"
+  },
+  "orfs_paths": {
+    "logs": "/tmp/cxl_openroad_orfs/OpenROAD-flow-scripts/flow/logs/nangate45/aes",
+    "reports": "/tmp/cxl_openroad_orfs/OpenROAD-flow-scripts/flow/reports/nangate45/aes",
+    "results": "/tmp/cxl_openroad_orfs/OpenROAD-flow-scripts/flow/results/nangate45/aes"
+  },
+  "time_log_path": "logs/openroad_orfs_route_time.log",
+  "time_metrics": {
+    "elapsed_seconds": 237.24,
+    "exit_status": 0,
+    "maximum_resident_set_mib": 25.0
+  },
+  "timed_stage": "do-route",
+  "total_wall_time_seconds": 283.9401016609627,
+  "wall_time_seconds": 238.75749481399544,
+  "workload_family": "openroad-orfs",
+  "workload_name": "routing"
+}

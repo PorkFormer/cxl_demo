@@ -1,0 +1,500 @@
+
+## bootstrap floorplan
+$ docker run --rm --name cxl-openroad-orfs-placement-floorplan-2539070-1781007614 --memory 64g -v /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts:/work/OpenROAD-flow-scripts -w /work/OpenROAD-flow-scripts openroad/orfs make -C flow DESIGN_CONFIG=designs/nangate45/aes/config.mk floorplan
+make: Entering directory '/work/OpenROAD-flow-scripts/flow'
+make: Nothing to be done for 'floorplan'.
+make: Leaving directory '/work/OpenROAD-flow-scripts/flow'
+
+## timed target
+$ /usr/bin/time -v docker run --rm --name cxl-openroad-orfs-placement-do-place-2539070-1781007614 --memory 64g -v /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts:/work/OpenROAD-flow-scripts -w /work/OpenROAD-flow-scripts openroad/orfs make -C flow DESIGN_CONFIG=designs/nangate45/aes/config.mk do-place
+make: Entering directory '/work/OpenROAD-flow-scripts/flow'
+/work/OpenROAD-flow-scripts/flow/scripts/flow.sh 3_1_place_gp_skip_io global_place_skip_io
+Running global_place_skip_io.tcl, stage 3_1_place_gp_skip_io
+make[1]: *** [Makefile:454: do-3_1_place_gp_skip_io] Error 127
+make: *** [Makefile:480: do-place] Error 2
+make: Leaving directory '/work/OpenROAD-flow-scripts/flow'
+Command exited with non-zero status 2
+	Command being timed: "docker run --rm --name cxl-openroad-orfs-placement-do-place-2539070-1781007614 --memory 64g -v /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts:/work/OpenROAD-flow-scripts -w /work/OpenROAD-flow-scripts openroad/orfs make -C flow DESIGN_CONFIG=designs/nangate45/aes/config.mk do-place"
+	User time (seconds): 0.00
+	System time (seconds): 0.01
+	Percent of CPU this job got: 0%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:04.22
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 24064
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 2855
+	Voluntary context switches: 600
+	Involuntary context switches: 112
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 8
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 2
+
+## bootstrap floorplan
+$ docker run --rm --name cxl-openroad-orfs-placement-floorplan-2547457-1781007738 --memory 64g -e OPENROAD_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad -e OPENSTA_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta -e YOSYS_EXE=/usr/local/bin/yosys -v /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts:/work/OpenROAD-flow-scripts -w /work/OpenROAD-flow-scripts openroad/orfs make -C flow DESIGN_CONFIG=designs/nangate45/aes/config.mk floorplan
+make: Entering directory '/work/OpenROAD-flow-scripts/flow'
+make: Nothing to be done for 'floorplan'.
+make: Leaving directory '/work/OpenROAD-flow-scripts/flow'
+
+## timed target
+$ /usr/bin/time -v docker run --rm --name cxl-openroad-orfs-placement-do-place-2547457-1781007738 --memory 64g -e OPENROAD_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad -e OPENSTA_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta -e YOSYS_EXE=/usr/local/bin/yosys -v /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts:/work/OpenROAD-flow-scripts -w /work/OpenROAD-flow-scripts openroad/orfs make -C flow DESIGN_CONFIG=designs/nangate45/aes/config.mk do-place
+make: Entering directory '/work/OpenROAD-flow-scripts/flow'
+/work/OpenROAD-flow-scripts/flow/scripts/flow.sh 3_1_place_gp_skip_io global_place_skip_io
+Running global_place_skip_io.tcl, stage 3_1_place_gp_skip_io
+read_liberty /work/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+read_db -hier ./results/nangate45/aes/base/2_floorplan.odb
+[WARNING ORD-0012] Hierarchical flow (-hier) is currently in development and may cause multiple issues. Do not use in production environments.
+read_sdc ./results/nangate45/aes/base/2_floorplan.sdc
+source /work/OpenROAD-flow-scripts/flow/platforms/nangate45/setRC.tcl
+FLOORPLAN_DEF is set. Skipping global placement without IOs
+Design area 15765 um^2 30% utilization.
+write_db ./results/nangate45/aes/base/3_1_place_gp_skip_io.odb
+Elapsed time: 0:00.53[h:]min:sec. CPU time: user 0.37 sys 0.07 (82%). Peak memory: 124928KB.
+Log                       Ext     Elapsed/s Peak Memory/MB sha1sum result [0:20)
+3_1_place_gp_skip_io      .odb            0            122 1a4fa044f62ca543829e
+/work/OpenROAD-flow-scripts/flow/scripts/flow.sh 3_2_place_iop io_placement
+Running io_placement.tcl, stage 3_2_place_iop
+exec cp ./results/nangate45/aes/base/3_1_place_gp_skip_io.odb ./results/nangate45/aes/base/3_2_place_iop.odb
+Elapsed time: 0:00.15[h:]min:sec. CPU time: user 0.09 sys 0.08 (110%). Peak memory: 93696KB.
+Log                       Ext     Elapsed/s Peak Memory/MB sha1sum result [0:20)
+3_2_place_iop             .odb            0             91 1a4fa044f62ca543829e
+/work/OpenROAD-flow-scripts/flow/scripts/flow.sh 3_3_place_gp global_place
+Running global_place.tcl, stage 3_3_place_gp
+read_liberty /work/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+read_db -hier ./results/nangate45/aes/base/3_2_place_iop.odb
+[WARNING ORD-0012] Hierarchical flow (-hier) is currently in development and may cause multiple issues. Do not use in production environments.
+read_sdc ./results/nangate45/aes/base/2_floorplan.sdc
+source /work/OpenROAD-flow-scripts/flow/platforms/nangate45/setRC.tcl
+[INFO RSZ-0026] Removed 0 buffers.
+Perform port buffering...
+[INFO RSZ-0027] Inserted 258 BUF_X1 input buffers.
+[INFO RSZ-0028] Inserted 129 BUF_X1 output buffers.
+[INFO GPL-0022] Initialize gpl and calculate uniform density.
+Placement density is 0.4899999952316284, computed from PLACE_DENSITY_LB_ADDON  0.20 and lower bound 0.3499999940395355
+global_placement -density 0.4899999952316284 -pad_left 0 -pad_right 0 -routability_driven -timing_driven -force_center_initial_place -min_phi_coef 0.95 -max_phi_coef 1.05
+[INFO GPL-0001] ---- Initialize GPL Main Data Structures
+[INFO GPL-0002] DBU: 2000
+[INFO GPL-0003] SiteSize: (  0.190  1.400 ) um
+[INFO GPL-0004] CoreBBox: ( 10.070 11.200 ) ( 239.970 240.800 ) um
+[INFO GPL-0036] Movable instances area:      15964.256 um^2
+[INFO GPL-0037] Total instances area:        16073.582 um^2
+[INFO GPL-0035] Pin density area adjust:      2361.193 um^2
+[INFO GPL-0032] ---- Initialize Region: Top-level
+[INFO GPL-0006] Number of instances:             12204
+[INFO GPL-0007] Movable instances:               11793
+[INFO GPL-0008] Fixed instances:                   411
+[INFO GPL-0009] Dummy instances:                     0
+[INFO GPL-0010] Number of nets:                  12618
+[INFO GPL-0011] Number of pins:                  46487
+[INFO GPL-0012] Die BBox:  (  0.000  0.000 ) ( 249.850 250.600 ) um
+[INFO GPL-0013] Core BBox: ( 10.070 11.200 ) ( 239.970 240.800 ) um
+[INFO GPL-0016] Core area:                   52785.040 um^2
+[INFO GPL-0014] Region name: top-level.
+[INFO GPL-0015] Region area:                 52785.040 um^2
+[INFO GPL-0017] Fixed instances area:          109.326 um^2
+[INFO GPL-0018] Movable instances area:      18325.449 um^2
+[INFO GPL-0019] Utilization:                    34.789 %
+[INFO GPL-0020] Standard cells area:         18325.449 um^2
+[INFO GPL-0021] Large instances area:            0.000 um^2
+[INFO GPL-0005] ---- Execute Conjugate Gradient Initial Placement.
+[INFO GPL-0051] Source of initial instance position counters:
+	Odb location = 0	Core center = 11793	Region center = 0
+[InitialPlace]  Iter: 1 conjugate gradient residual: 0.00020690 HPWL: 276704470
+[InitialPlace]  Iter: 2 conjugate gradient residual: 0.00006511 HPWL: 182403003
+[InitialPlace]  Iter: 3 conjugate gradient residual: 0.00002467 HPWL: 180605433
+[InitialPlace]  Iter: 4 conjugate gradient residual: 0.00002783 HPWL: 180377891
+[InitialPlace]  Iter: 5 conjugate gradient residual: 0.00002307 HPWL: 179963728
+[InitialPlace]  Iter: 6 conjugate gradient residual: 0.00001325 HPWL: 179891804
+[InitialPlace]  Iter: 7 conjugate gradient residual: 0.00001399 HPWL: 179521794
+[InitialPlace]  Iter: 8 conjugate gradient residual: 0.00001424 HPWL: 179445823
+[InitialPlace]  Iter: 9 conjugate gradient residual: 0.00001919 HPWL: 179092951
+[InitialPlace]  Iter: 10 conjugate gradient residual: 0.00001314 HPWL: 179070300
+[InitialPlace]  Iter: 11 conjugate gradient residual: 0.00001356 HPWL: 178802471
+[InitialPlace]  Iter: 12 conjugate gradient residual: 0.00001796 HPWL: 178802577
+[InitialPlace]  Iter: 13 conjugate gradient residual: 0.00001336 HPWL: 178562794
+[InitialPlace]  Iter: 14 conjugate gradient residual: 0.00001406 HPWL: 178584591
+[InitialPlace]  Iter: 15 conjugate gradient residual: 0.00001276 HPWL: 178422654
+[InitialPlace]  Iter: 16 conjugate gradient residual: 0.00001135 HPWL: 178473141
+[InitialPlace]  Iter: 17 conjugate gradient residual: 0.00000769 HPWL: 178346541
+[INFO GPL-0033] ---- Initialize Nesterov Region: Top-level
+[INFO GPL-0023] Placement target density:       0.4900
+[INFO GPL-0024] Movable insts average area:      1.554 um^2
+[INFO GPL-0025] Ideal bin area:                  3.171 um^2
+[INFO GPL-0026] Ideal bin count:                 16644
+[INFO GPL-0027] Total bin area:              52785.040 um^2
+[INFO GPL-0028] Bin count (X, Y):         128 ,    128
+[INFO GPL-0029] Bin size (W * H):       1.796 *  1.794 um
+[INFO GPL-0030] Number of bins:                  16384
+[INFO GPL-0084] ---- Execute Nesterov Global Placement.
+[INFO GPL-0031] HPWL: Half-Perimeter Wirelength
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+        0 |   0.9530 |  6.693911e+04 |   +0.00% |  7.90e-15 |      
+       10 |   0.8147 |  7.769510e+04 |  +16.07% |  1.28e-14 |      
+       20 |   0.7925 |  8.142099e+04 |   +4.80% |  2.09e-14 |      
+       30 |   0.7971 |  7.974093e+04 |   -2.06% |  3.40e-14 |      
+       40 |   0.7986 |  7.862290e+04 |   -1.40% |  5.54e-14 |      
+       50 |   0.7963 |  7.857028e+04 |   -0.07% |  9.03e-14 |      
+       60 |   0.7977 |  7.822952e+04 |   -0.43% |  1.47e-13 |      
+       70 |   0.7979 |  7.781310e+04 |   -0.53% |  2.40e-13 |      
+       80 |   0.7966 |  7.761865e+04 |   -0.25% |  3.90e-13 |      
+       90 |   0.7948 |  7.757928e+04 |   -0.05% |  6.36e-13 |      
+      100 |   0.7931 |  7.754937e+04 |   -0.04% |  1.04e-12 |      
+      110 |   0.7917 |  7.755410e+04 |   +0.01% |  1.69e-12 |      
+      120 |   0.7902 |  7.761305e+04 |   +0.08% |  2.75e-12 |      
+      130 |   0.7898 |  7.774467e+04 |   +0.17% |  4.47e-12 |      
+      140 |   0.7899 |  7.794067e+04 |   +0.25% |  7.29e-12 |      
+      150 |   0.7896 |  7.824413e+04 |   +0.39% |  1.19e-11 |      
+      160 |   0.7875 |  7.876805e+04 |   +0.67% |  1.93e-11 |      
+      170 |   0.7843 |  7.971113e+04 |   +1.20% |  3.15e-11 |      
+      180 |   0.7795 |  8.103245e+04 |   +1.66% |  5.13e-11 |      
+      190 |   0.7739 |  8.288590e+04 |   +2.29% |  8.35e-11 |      
+      200 |   0.7644 |  8.579797e+04 |   +3.51% |  1.36e-10 |      
+      210 |   0.7505 |  9.042265e+04 |   +5.39% |  2.21e-10 |      
+      220 |   0.7355 |  9.503551e+04 |   +5.10% |  3.60e-10 |      
+      230 |   0.7204 |  9.865369e+04 |   +3.81% |  5.86e-10 |      
+      240 |   0.7017 |  1.026067e+05 |   +4.01% |  9.53e-10 |      
+      250 |   0.6765 |  1.058290e+05 |   +3.14% |  1.55e-09 |      
+      260 |   0.6490 |  1.091229e+05 |   +3.11% |  2.53e-09 |      
+[INFO GPL-0100] Timing-driven iteration 1/2, virtual: false.
+[INFO GPL-0101]    Iter: 266, overflow: 0.633, keep resizer changes at: 1, HPWL: 222588426
+Iteration |   Area    | Resized | Buffers | Nets repaired | Remaining
+---------------------------------------------------------------------
+        0 |     +0.0% |       0 |       0 |             0 |     12618
+    final |     +3.7% |      18 |     317 |           251 |         0
+---------------------------------------------------------------------
+[INFO RSZ-0034] Found 114 slew violations.
+[INFO RSZ-0036] Found 239 capacitance violations.
+[INFO RSZ-0039] Resized 18 instances.
+[INFO RSZ-0038] Inserted 317 buffers in 251 nets.
+   Iter   |    Area   | Removed | Inserted |   Pins
+          |           | Buffers | Buffers  | Remaining
+-------------------------------------------------------
+        0 |     +0.0% |       0 |        0 |     12359
+     1200 |     +0.0% |       0 |        4 |     11159
+     2400 |     +0.0% |       0 |        5 |      9959
+     3600 |     +0.1% |       0 |       16 |      8759
+     4800 |     +0.4% |       0 |       82 |      7559
+     6000 |     +0.9% |       0 |      171 |      6359
+     7200 |     +1.8% |       0 |      349 |      5159
+     8400 |     +6.9% |       3 |     1324 |      3959
+     9600 |    +18.2% |     221 |     3713 |      2759
+    10800 |    +21.5% |     312 |     4437 |      1559
+    12000 |    +22.2% |     312 |     4582 |       359
+    final |    +22.5% |     317 |     4635 |         0
+-------------------------------------------------------
+[INFO GPL-0106] Timing-driven: worst slack -2.0844604e-11
+[INFO GPL-0107] Timing-driven: repair_design delta area: 4353.507 um^2 (+23.76%)
+[INFO GPL-0108] Timing-driven: repair_design, gpl delta gcells: 4635 (+39.30%)
+[INFO GPL-0109] Timing-driven: repair_design, gcells created: 4952, deleted: 317
+[INFO GPL-0110] Timing-driven: new target density: 0.57264733
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+      270 |   0.6003 |  1.487081e+05 |  +36.28% |  4.08e-09 |      
+[INFO GPL-0038] Routability snapshot saved at iter = 272
+      271 |   0.5882 |  1.519049e+05 |          |           |      
+      280 |   0.5899 |  1.488813e+05 |   +0.12% |  6.63e-09 |      
+      290 |   0.5329 |  1.575752e+05 |   +5.84% |  1.08e-08 |      
+      300 |   0.4922 |  1.622903e+05 |   +2.99% |  1.76e-08 |      
+      310 |   0.4360 |  1.690903e+05 |   +4.19% |  2.85e-08 |      
+      320 |   0.3702 |  1.763740e+05 |   +4.31% |  4.64e-08 |      
+      330 |   0.3111 |  1.829297e+05 |   +3.72% |  7.18e-08 |      
+[INFO GPL-0040] Routability iteration: 1
+[INFO GPL-0041] Total routing overflow: 0.0213
+[INFO GPL-0042] Number of overflowed tiles: 4 (0.05%)
+[INFO GPL-0043] Average top 0.5% routing congestion: 0.9672
+[INFO GPL-0044] Average top 1.0% routing congestion: 0.9431
+[INFO GPL-0045] Average top 2.0% routing congestion: 0.9152
+[INFO GPL-0046] Average top 5.0% routing congestion: 0.8742
+[INFO GPL-0047] Routability iteration weighted routing congestion: 0.9551
+[INFO GPL-0050] Weighted routing congestion is lower than target routing congestion(1.0100), end routability optimization.
+[INFO GPL-0090] Routability finished. Target routing congestion achieved succesfully.
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+      340 |   0.2690 |  1.871325e+05 |   +2.30% |  1.06e-07 |      
+      350 |   0.2293 |  1.912148e+05 |   +2.18% |  1.56e-07 |      
+      360 |   0.1975 |  1.940978e+05 |   +1.51% |  2.29e-07 |      
+[INFO GPL-0100] Timing-driven iteration 2/2, virtual: false.
+[INFO GPL-0101]    Iter: 362, overflow: 0.194, keep resizer changes at: 1, HPWL: 388758785
+Iteration |   Area    | Resized | Buffers | Nets repaired | Remaining
+---------------------------------------------------------------------
+        0 |     +0.0% |       0 |       0 |             0 |     17253
+    final |     +0.0% |       0 |       2 |             2 |         0
+---------------------------------------------------------------------
+[INFO RSZ-0036] Found 2 capacitance violations.
+[INFO RSZ-0038] Inserted 2 buffers in 2 nets.
+   Iter   |    Area   | Removed | Inserted |   Pins
+          |           | Buffers | Buffers  | Remaining
+-------------------------------------------------------
+        0 |     +0.0% |       0 |        0 |     12359
+     1200 |     +0.0% |       4 |        9 |     11159
+     2400 |     +0.0% |       5 |        9 |      9959
+     3600 |     -0.0% |      16 |       11 |      8759
+     4800 |     -0.2% |      82 |       24 |      7559
+     6000 |     -0.4% |     171 |       64 |      6359
+     7200 |     -1.0% |     349 |      100 |      5159
+     8400 |     -3.3% |    1324 |      528 |      3959
+     9600 |     -7.6% |    3714 |     1822 |      2759
+    10800 |     -9.0% |    4439 |     2185 |      1559
+    12000 |     -9.1% |    4584 |     2316 |       359
+    final |     -9.1% |    4637 |     2364 |         0
+-------------------------------------------------------
+[INFO GPL-0106] Timing-driven: worst slack -1.19171895e-11
+[INFO GPL-0107] Timing-driven: repair_design delta area: -1864.926 um^2 (-8.22%)
+[INFO GPL-0108] Timing-driven: repair_design, gpl delta gcells: -2271 (-13.82%)
+[INFO GPL-0109] Timing-driven: repair_design, gcells created: 2366, deleted: 4637
+[INFO GPL-0110] Timing-driven: new target density: 0.5372435
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+      370 |   0.1840 |  1.895259e+05 |   -2.36% |  3.37e-07 |      
+      380 |   0.1594 |  1.877716e+05 |   -0.93% |  4.97e-07 |      
+      390 |   0.1357 |  1.871901e+05 |   -0.31% |  7.32e-07 |      
+      400 |   0.1172 |  1.871791e+05 |   -0.01% |  1.08e-06 |      
+      410 |   0.0993 |  1.873964e+05 |   +0.12% |  1.59e-06 |      
+      410 |   0.0993 |  1.873964e+05 |          |  1.65e-06 |      
+---------------------------------------------------------------
+[INFO GPL-1001] Global placement finished at iteration 410
+[INFO GPL-1017] Routability mode iteration count: 61
+[INFO GPL-1005] Routability final weighted congestion: 0.8708
+[INFO GPL-1002] Placed Cell Area            20814.0303
+[INFO GPL-1003] Available Free Area         52675.7140
+[INFO GPL-1004] Minimum Feasible Density        0.3500 (cell_area / free_area)
+[INFO GPL-1006]   Suggested Target Densities:
+[INFO GPL-1007]     - For 90% usage of free space: 0.4390
+[INFO GPL-1008]     - For 80% usage of free space: 0.4939
+[INFO GPL-1009]     - For 50% usage of free space: 0.7903
+[INFO GPL-1011] Original area (um^2): 18325.45
+[INFO GPL-1012] Total routability artificial inflation: 0.00 (+0.00%)
+[INFO GPL-1013] Total timing-driven delta area: 2488.58 (+13.58%)
+[INFO GPL-1014] Final placement area: 20814.03 (+13.58%)
+Took 118 seconds: global_placement -density 0.4899999952316284 -pad_left 0 -pad_right 0 -routability_driven -timing_driven -force_center_initial_place -min_phi_coef 0.95 -max_phi_coef 1.05
+estimate_parasitics -placement
+Report metrics stage 3, global place...
+
+==========================================================================
+global place report_design_area
+--------------------------------------------------------------------------
+Design area 18560 um^2 35% utilization.
+write_db ./results/nangate45/aes/base/3_3_place_gp.odb
+Elapsed time: 2:01.88[h:]min:sec. CPU time: user 5059.82 sys 72.97 (4211%). Peak memory: 504832KB.
+Log                       Ext     Elapsed/s Peak Memory/MB sha1sum result [0:20)
+3_3_place_gp              .odb          121            493 92a13f63b884eb3304fc
+/work/OpenROAD-flow-scripts/flow/scripts/flow.sh 3_4_place_resized resize
+Running resize.tcl, stage 3_4_place_resized
+read_liberty /work/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+read_db -hier ./results/nangate45/aes/base/3_3_place_gp.odb
+[WARNING ORD-0012] Hierarchical flow (-hier) is currently in development and may cause multiple issues. Do not use in production environments.
+read_sdc ./results/nangate45/aes/base/2_floorplan.sdc
+source /work/OpenROAD-flow-scripts/flow/platforms/nangate45/setRC.tcl
+estimate_parasitics -placement
+replace_arith_modules -path_count 1000 -target setup -slack_threshold 0.0
+[INFO RSZ-0151] Starting arithmetic module replacement to optimize 'setup' target
+[INFO RSZ-0152] Analyzing 1000 critical paths with slack < 0.00
+[INFO RSZ-0153] Identified 1 violating endpoints
+[INFO RSZ-0154] Identified 0 critical arithmetic instances
+[INFO GPL-0083] Execute incremental mode global placement.
+[INFO GPL-0001] ---- Initialize GPL Main Data Structures
+[INFO GPL-0002] DBU: 2000
+[INFO GPL-0003] SiteSize: (  0.190  1.400 ) um
+[INFO GPL-0004] CoreBBox: ( 10.070 11.200 ) ( 239.970 240.800 ) um
+[INFO GPL-0036] Movable instances area:      18450.824 um^2
+[INFO GPL-0037] Total instances area:        18560.150 um^2
+[INFO GPL-0035] Pin density area adjust:      2973.153 um^2
+[INFO GPL-0032] ---- Initialize Region: Top-level
+[INFO GPL-0006] Number of instances:             14568
+[INFO GPL-0007] Movable instances:               14157
+[INFO GPL-0008] Fixed instances:                   411
+[INFO GPL-0009] Dummy instances:                     0
+[INFO GPL-0010] Number of nets:                  14982
+[INFO GPL-0011] Number of pins:                  51215
+[INFO GPL-0012] Die BBox:  (  0.000  0.000 ) ( 249.850 250.600 ) um
+[INFO GPL-0013] Core BBox: ( 10.070 11.200 ) ( 239.970 240.800 ) um
+[INFO GPL-0016] Core area:                   52785.040 um^2
+[INFO GPL-0014] Region name: top-level.
+[INFO GPL-0015] Region area:                 52785.040 um^2
+[INFO GPL-0017] Fixed instances area:          109.326 um^2
+[INFO GPL-0018] Movable instances area:      21423.977 um^2
+[INFO GPL-0019] Utilization:                    40.671 %
+[INFO GPL-0020] Standard cells area:         21423.977 um^2
+[INFO GPL-0021] Large instances area:            0.000 um^2
+[INFO GPL-0154] Identified 14157 placed instances
+[INFO GPL-0155] Identified 0 not placed instances
+[INFO GPL-0156] Identified all instances as placed. Skipping incremental mode
+Perform buffer insertion and gate resizing...
+repair_design -verbose
+Iteration |   Area    | Resized | Buffers | Nets repaired | Remaining
+---------------------------------------------------------------------
+        0 |     +0.0% |       0 |       0 |             0 |     14982
+     1000 |     +0.0% |       0 |       0 |             0 |     13982
+     2000 |     +0.0% |       0 |       0 |             0 |     12982
+     3000 |     +0.0% |       0 |       0 |             0 |     11982
+     4000 |     +0.0% |       0 |       0 |             0 |     10982
+     5000 |     +0.0% |       0 |       0 |             0 |      9982
+     6000 |     +0.0% |       0 |       0 |             0 |      8982
+     7000 |     +0.0% |       0 |       0 |             0 |      7982
+     8000 |     +0.0% |       0 |       0 |             0 |      6982
+     9000 |     +0.0% |       0 |       0 |             0 |      5982
+    10000 |     +0.0% |       0 |       0 |             0 |      4982
+    11000 |     +0.0% |       0 |       0 |             0 |      3982
+    12000 |     +0.0% |       0 |       0 |             0 |      2982
+    13000 |     +0.0% |       0 |       0 |             0 |      1982
+    14000 |     +0.0% |       0 |       0 |             0 |       982
+    final |     +0.0% |       0 |       0 |             0 |         0
+---------------------------------------------------------------------
+Floating nets: 
+Report metrics stage 3, resizer...
+
+==========================================================================
+resizer report_design_area
+--------------------------------------------------------------------------
+Design area 18560 um^2 35% utilization.
+Instance count before 14568, after 14568
+Pin count before 50827, after 50827
+write_db ./results/nangate45/aes/base/3_4_place_resized.odb
+Elapsed time: 0:07.61[h:]min:sec. CPU time: user 14.80 sys 16.73 (414%). Peak memory: 260228KB.
+Log                       Ext     Elapsed/s Peak Memory/MB sha1sum result [0:20)
+3_4_place_resized         .odb            7            254 92a13f63b884eb3304fc
+/work/OpenROAD-flow-scripts/flow/scripts/flow.sh 3_5_place_dp detail_place
+Running detail_place.tcl, stage 3_5_place_dp
+read_liberty /work/OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+read_db -hier ./results/nangate45/aes/base/3_4_place_resized.odb
+[WARNING ORD-0012] Hierarchical flow (-hier) is currently in development and may cause multiple issues. Do not use in production environments.
+read_sdc ./results/nangate45/aes/base/2_floorplan.sdc
+source /work/OpenROAD-flow-scripts/flow/platforms/nangate45/setRC.tcl
+detailed_placement
+[INFO DPL-0006] Core area: 52785.04 um^2, Instances area: 18560.15 um^2, Utilization: 35.2%
+[INFO DPL-0005] Diamond search max displacement: +/- 500 sites horizontally, +/- 100 rows vertically.
+[INFO DPL-1101] Legalizing using diamond search.
+Movements Summary
+---------------------------------------
+Total cells:                   14157
+Diamond Move Success:          14157 (100.00%)
+Diamond Move Failure:              0
+Rip-up and replace Success:        0 (  0.00% of diamond failures)
+Rip-up and replace Failure:        0
+Total Placement Failures:          0
+---------------------------------------
+Placement Analysis
+---------------------------------
+total displacement       8954.2 u
+average displacement        0.6 u
+max displacement            2.6 u
+original HPWL          187495.0 u
+legalized HPWL         191726.5 u
+delta HPWL                    2 %
+
+improve_placement -max_displacement "5 1"
+Detailed placement improvement.
+[INFO DPL-0401] Setting random seed to 1.
+[INFO DPL-0402] Setting maximum displacement 5 1 to 14000 2800 units.
+[INFO DPL-0320] Collected 799 fixed cells.
+[INFO DPL-0318] Collected 14157 single height cells.
+[INFO DPL-0321] Collected 0 wide cells.
+[INFO DPL-0322] Image (20140, 22400) - (479940, 481600)
+[INFO DPL-0310] Assigned 14157 cells into segments.  Movement in X-direction is 0.000000, movement in Y-direction is 0.000000.
+[INFO DPL-0313] Found 0 cells in wrong regions.
+[INFO DPL-0315] Found 0 row alignment problems.
+[INFO DPL-0314] Found 0 site alignment problems.
+[INFO DPL-0311] Found 0 overlaps between adjacent cells.
+[INFO DPL-0312] Found 0 edge spacing violations and 0 padding violations.
+[INFO DPL-0303] Running algorithm for independent set matching.
+[INFO DPL-0300] Set matching objective is wirelength.
+[INFO DPL-0301] Pass   1 of matching; objective is 3.828046e+08.
+[INFO DPL-0302] End of matching; objective is 3.826857e+08, improvement is 0.03 percent.
+[INFO DPL-0303] Running algorithm for global swaps.
+[INFO DPL-0306] Pass   1 of global swaps; hpwl is 3.763663e+08.
+[INFO DPL-0306] Pass   2 of global swaps; hpwl is 3.735365e+08.
+[INFO DPL-0307] End of global swaps; objective is 3.735365e+08, improvement is 2.39 percent.
+[INFO DPL-0303] Running algorithm for vertical swaps.
+[INFO DPL-0308] Pass   1 of vertical swaps; hpwl is 3.720890e+08.
+[INFO DPL-0309] End of vertical swaps; objective is 3.720890e+08, improvement is 0.39 percent.
+[INFO DPL-0303] Running algorithm for reordering.
+[INFO DPL-0304] Pass   1 of reordering; objective is 3.710741e+08.
+[INFO DPL-0305] End of reordering; objective is 3.710741e+08, improvement is 0.27 percent.
+[INFO DPL-0303] Running algorithm for random improvement.
+[INFO DPL-0324] Random improver is using random generator.
+[INFO DPL-0325] Random improver is using hpwl objective.
+[INFO DPL-0326] Random improver cost string is (a).
+[INFO DPL-0332] End of pass, Generator random called 283140 times.
+[INFO DPL-0335] Generator random, Cumulative attempts 283140, swaps 34864, moves 100984 since last reset.
+[INFO DPL-0333] End of pass, Objective hpwl, Initial cost 3.701477e+08, Scratch cost 3.634055e+08, Incremental cost 3.634055e+08, Mismatch? N
+[INFO DPL-0338] End of pass, Total cost is 3.634055e+08.
+[INFO DPL-0327] Pass   1 of random improver; improvement in cost is 1.82 percent.
+[INFO DPL-0332] End of pass, Generator random called 283140 times.
+[INFO DPL-0335] Generator random, Cumulative attempts 566280, swaps 68727, moves 198371 since last reset.
+[INFO DPL-0333] End of pass, Objective hpwl, Initial cost 3.634055e+08, Scratch cost 3.590985e+08, Incremental cost 3.590985e+08, Mismatch? N
+[INFO DPL-0338] End of pass, Total cost is 3.590985e+08.
+[INFO DPL-0327] Pass   2 of random improver; improvement in cost is 1.19 percent.
+[INFO DPL-0332] End of pass, Generator random called 283140 times.
+[INFO DPL-0335] Generator random, Cumulative attempts 849420, swaps 102386, moves 292761 since last reset.
+[INFO DPL-0333] End of pass, Objective hpwl, Initial cost 3.590985e+08, Scratch cost 3.563627e+08, Incremental cost 3.563627e+08, Mismatch? N
+[INFO DPL-0338] End of pass, Total cost is 3.563627e+08.
+[INFO DPL-0327] Pass   3 of random improver; improvement in cost is 0.76 percent.
+[INFO DPL-0328] End of random improver; improvement is 3.724195 percent.
+[INFO DPL-0380] Cell flipping.
+[INFO DPL-0382] Changed 0 cell orientations for row compatibility.
+[INFO DPL-0383] Performed 4251 cell flips.
+[INFO DPL-0384] End of flipping; objective is 3.526001e+08, improvement is 1.31 percent.
+[INFO DPL-0313] Found 0 cells in wrong regions.
+[INFO DPL-0315] Found 0 row alignment problems.
+[INFO DPL-0314] Found 0 site alignment problems.
+[INFO DPL-0311] Found 0 overlaps between adjacent cells.
+[INFO DPL-0312] Found 0 edge spacing violations and 0 padding violations.
+Detailed Improvement Results
+------------------------------------------
+Original HPWL           191726.5 u (   98854.3,    92872.2)
+Final HPWL              176650.4 u (   88140.1,    88510.3)
+Delta HPWL                  -7.9 % (     -10.8,       -4.7)
+
+Took 7 seconds: improve_placement -max_displacement "5 1"
+optimize_mirroring
+[INFO DPL-0020] Mirrored 1678 instances
+[INFO DPL-0021] HPWL before          176650.4 u
+[INFO DPL-0022] HPWL after           176578.8 u
+[INFO DPL-0023] HPWL delta               -0.0 %
+[INFO FLW-0012] Placement violations .
+estimate_parasitics -placement
+Report metrics stage 3, detailed place...
+
+==========================================================================
+detailed place report_design_area
+--------------------------------------------------------------------------
+Design area 18560 um^2 35% utilization.
+write_db ./results/nangate45/aes/base/3_5_place_dp.odb
+Elapsed time: 0:13.38[h:]min:sec. CPU time: user 19.85 sys 16.82 (274%). Peak memory: 204312KB.
+Log                       Ext     Elapsed/s Peak Memory/MB sha1sum result [0:20)
+3_5_place_dp              .odb           13            199 9a99d6c3fb0bac09c718
+cp ./results/nangate45/aes/base/3_5_place_dp.odb ./results/nangate45/aes/base/3_place.odb
+cp ./results/nangate45/aes/base/2_floorplan.sdc ./results/nangate45/aes/base/3_place.sdc
+make: Leaving directory '/work/OpenROAD-flow-scripts/flow'
+	Command being timed: "docker run --rm --name cxl-openroad-orfs-placement-do-place-2547457-1781007738 --memory 64g -e OPENROAD_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad -e OPENSTA_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta -e YOSYS_EXE=/usr/local/bin/yosys -v /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts:/work/OpenROAD-flow-scripts -w /work/OpenROAD-flow-scripts openroad/orfs make -C flow DESIGN_CONFIG=designs/nangate45/aes/config.mk do-place"
+	User time (seconds): 0.02
+	System time (seconds): 0.03
+	Percent of CPU this job got: 0%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 3:11.39
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 26112
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 3053
+	Voluntary context switches: 2592
+	Involuntary context switches: 20
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 272
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
