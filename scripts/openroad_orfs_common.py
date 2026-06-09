@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Common runner for OpenROAD-flow-scripts Docker stage workloads."""
+"""Common runner for OpenROAD-flow-scripts native stage workloads."""
 
 from __future__ import annotations
 
@@ -7,25 +7,21 @@ import argparse
 import json
 import os
 import re
+import shutil
 import shlex
 import subprocess
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Sequence
 
-MIB = 1024 * 1024
 DEFAULT_ORFS_REPO = "https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts.git"
 DEFAULT_ORFS_COMMIT = "8abc6a9035ca36490a1577867addca732a87cee8"
-DEFAULT_DOCKER_IMAGE = "openroad/orfs"
 DEFAULT_WORK_DIR = Path("/tmp/cxl_openroad_orfs")
-DEFAULT_DOCKER_MEMORY = "64g"
 DEFAULT_DESIGN_CONFIG = Path("designs/nangate45/aes/config.mk")
-CONTAINER_ORFS_PATH = "/work/OpenROAD-flow-scripts"
-IMAGE_OPENROAD_EXE = "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad"
-IMAGE_OPENSTA_EXE = "/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta"
-IMAGE_YOSYS_EXE = "/usr/local/bin/yosys"
+DEFAULT_OPENROAD_RELATIVE = Path("tools/install/OpenROAD/bin/openroad")
+DEFAULT_OPENSTA_RELATIVE = Path("tools/install/OpenROAD/bin/sta")
+DEFAULT_YOSYS_RELATIVE = Path("tools/install/yosys/bin/yosys")
 
 
 @dataclass(frozen=True)
@@ -41,8 +37,7 @@ class WorkloadSpec:
 class TimedRunResult:
     exit_status: int
     wall_time_seconds: float
-    docker_stats_samples: list[dict[str, Any]]
-    container_peak_memory_mib: float | None
+    peak_memory_mib: float | None
     time_metrics: dict[str, Any]
 
 
@@ -70,10 +65,6 @@ def add_common_arguments(parser: argparse.ArgumentParser, spec: WorkloadSpec) ->
     parser.add_argument("--orfs-repo", default=DEFAULT_ORFS_REPO)
     parser.add_argument("--orfs-commit", default=DEFAULT_ORFS_COMMIT)
     parser.add_argument("--work-dir", type=Path, default=DEFAULT_WORK_DIR)
-    parser.add_argument("--docker-image", default=DEFAULT_DOCKER_IMAGE)
-    parser.add_argument("--docker-memory", default=DEFAULT_DOCKER_MEMORY)
-    parser.add_argument("--docker-mode", choices=("auto", "direct", "sg"), default="auto")
-    parser.add_argument("--stats-interval", type=positive_float, default=1.0)
     parser.add_argument("--design-config", type=Path, default=DEFAULT_DESIGN_CONFIG)
     parser.add_argument("--bootstrap-target", default=spec.default_bootstrap_target)
     parser.add_argument("--timed-target", default=spec.default_timed_target)
@@ -84,82 +75,53 @@ def add_common_arguments(parser: argparse.ArgumentParser, spec: WorkloadSpec) ->
         action="store_true",
         help="Run only the timed target; useful when the bootstrap stage already exists.",
     )
+    parser.add_argument(
+        "--openroad-exe",
+        type=Path,
+        default=None,
+        help="Native OpenROAD executable. Defaults to OPENROAD_EXE, ORFS tools/install, or PATH.",
+    )
+    parser.add_argument(
+        "--opensta-exe",
+        type=Path,
+        default=None,
+        help="Native OpenSTA executable. Defaults to OPENSTA_EXE, ORFS tools/install, or PATH.",
+    )
+    parser.add_argument(
+        "--yosys-exe",
+        type=Path,
+        default=None,
+        help="Native Yosys executable. Defaults to YOSYS_EXE, ORFS tools/install, or PATH.",
+    )
 
-
-def positive_float(value: str) -> float:
-    parsed = float(value)
-    if parsed <= 0:
-        raise argparse.ArgumentTypeError("must be positive")
-    return parsed
-
-
-def parse_memory_mib(text: str) -> float:
-    """Parse Docker memory strings such as '123MiB / 64GiB' into MiB."""
-    first_value = text.split("/", 1)[0].strip().replace(",", "")
-    match = re.fullmatch(r"([0-9]+(?:\.[0-9]+)?)\s*([A-Za-z]+)", first_value)
-    if not match:
-        raise ValueError(f"cannot parse memory value {text!r}")
-
-    value = float(match.group(1))
-    unit = match.group(2)
-    factors = {
-        "B": 1 / MIB,
-        "KiB": 1 / 1024,
-        "MiB": 1.0,
-        "GiB": 1024.0,
-        "TiB": 1024.0 * 1024.0,
-        "KB": 1000 / MIB,
-        "MB": 1000 * 1000 / MIB,
-        "GB": 1000 * 1000 * 1000 / MIB,
-        "TB": 1000 * 1000 * 1000 * 1000 / MIB,
-    }
-    if unit not in factors:
-        raise ValueError(f"unsupported memory unit {unit!r} in {text!r}")
-    return value * factors[unit]
-
-
-def build_docker_make_command(
+def build_native_make_command(
     orfs_path: Path,
-    image: str,
-    memory: str,
-    container_name: str,
     design_config: Path,
     target: str,
 ) -> list[str]:
-    mount = f"{Path(orfs_path)}:{CONTAINER_ORFS_PATH}"
     return [
-        "docker",
-        "run",
-        "--rm",
-        "--name",
-        container_name,
-        "--memory",
-        memory,
-        "-e",
-        f"OPENROAD_EXE={IMAGE_OPENROAD_EXE}",
-        "-e",
-        f"OPENSTA_EXE={IMAGE_OPENSTA_EXE}",
-        "-e",
-        f"YOSYS_EXE={IMAGE_YOSYS_EXE}",
-        "-v",
-        mount,
-        "-w",
-        CONTAINER_ORFS_PATH,
-        image,
         "make",
         "-C",
-        "flow",
+        str(Path(orfs_path) / "flow"),
         f"DESIGN_CONFIG={design_config}",
         target,
     ]
 
 
-def wrap_docker_command(command: Sequence[str], docker_mode: str) -> list[str]:
-    if docker_mode == "direct":
-        return list(command)
-    if docker_mode == "sg":
-        return ["sg", "docker", "-c", shlex.join(command)]
-    raise ValueError(f"unknown docker mode {docker_mode!r}")
+def build_native_tool_env(
+    base_env: dict[str, str] | None = None,
+    openroad_exe: Path | None = None,
+    opensta_exe: Path | None = None,
+    yosys_exe: Path | None = None,
+) -> dict[str, str]:
+    env = dict(os.environ if base_env is None else base_env)
+    if openroad_exe is not None:
+        env["OPENROAD_EXE"] = str(openroad_exe)
+    if opensta_exe is not None:
+        env["OPENSTA_EXE"] = str(opensta_exe)
+    if yosys_exe is not None:
+        env["YOSYS_EXE"] = str(yosys_exe)
+    return env
 
 
 def write_metrics(path: Path, metrics: dict[str, Any]) -> None:
@@ -179,9 +141,6 @@ def run_orfs_workload(
     metrics = initial_metrics(args, spec)
 
     try:
-        docker_mode = resolve_docker_mode(args.docker_mode, runner)
-        metrics["docker"]["mode"] = docker_mode
-
         orfs_path = ensure_orfs_repo(
             work_dir=args.work_dir,
             repo_url=args.orfs_repo,
@@ -190,32 +149,19 @@ def run_orfs_workload(
         )
         metrics["orfs"]["path"] = str(orfs_path)
         metrics["orfs_paths"] = orfs_output_paths(orfs_path, args.design_config)
-        metrics["docker"]["image_digest"] = docker_image_digest(
-            args.docker_image,
-            docker_mode=docker_mode,
-            runner=runner,
-        )
+        native_env = resolve_native_tool_env(orfs_path, args, os.environ)
+        metrics["toolchain"] = native_toolchain_metrics(native_env)
 
-        bootstrap_container = container_name(spec.workload_name, args.bootstrap_target)
-        timed_container = container_name(spec.workload_name, args.timed_target)
-        bootstrap_docker_command = build_docker_make_command(
+        bootstrap_command = build_native_make_command(
             orfs_path=orfs_path,
-            image=args.docker_image,
-            memory=args.docker_memory,
-            container_name=bootstrap_container,
             design_config=args.design_config,
             target=args.bootstrap_target,
         )
-        timed_docker_command = build_docker_make_command(
+        timed_command = build_native_make_command(
             orfs_path=orfs_path,
-            image=args.docker_image,
-            memory=args.docker_memory,
-            container_name=timed_container,
             design_config=args.design_config,
             target=args.timed_target,
         )
-        bootstrap_command = wrap_docker_command(bootstrap_docker_command, docker_mode)
-        timed_command = wrap_docker_command(timed_docker_command, docker_mode)
         metrics["full_command"] = shlex.join(["/usr/bin/time", "-v", *timed_command])
         metrics["commands"] = {
             "bootstrap": shlex.join(bootstrap_command),
@@ -227,22 +173,20 @@ def run_orfs_workload(
                 command=bootstrap_command,
                 log_path=args.time_log,
                 title=f"bootstrap {args.bootstrap_target}",
+                env=native_env,
                 runner=runner,
             )
         timed_result = run_timed_command(
             command=timed_command,
-            docker_mode=docker_mode,
-            container_name=timed_container,
             time_log=args.time_log,
-            stats_interval_seconds=args.stats_interval,
+            env=native_env,
             runner=runner,
         )
         exit_status = timed_result.exit_status
         metrics.update(
             {
                 "wall_time_seconds": timed_result.wall_time_seconds,
-                "docker_stats_samples": timed_result.docker_stats_samples,
-                "container_peak_memory_mib": timed_result.container_peak_memory_mib,
+                "peak_memory_mib": timed_result.peak_memory_mib,
                 "time_metrics": timed_result.time_metrics,
             }
         )
@@ -269,12 +213,17 @@ def initial_metrics(args: argparse.Namespace, spec: WorkloadSpec) -> dict[str, A
             "commit": args.orfs_commit,
             "path": str(Path(args.work_dir) / "OpenROAD-flow-scripts"),
         },
-        "docker": {
-            "mode": args.docker_mode,
-            "image": args.docker_image,
-            "image_digest": None,
-            "memory": args.docker_memory,
+        "execution": {
+            "mode": "native",
         },
+        "toolchain": native_toolchain_metrics(
+            build_native_tool_env(
+                base_env={},
+                openroad_exe=args.openroad_exe,
+                opensta_exe=args.opensta_exe,
+                yosys_exe=args.yosys_exe,
+            )
+        ),
         "design_config": str(args.design_config),
         "bootstrap_stage": args.bootstrap_target,
         "timed_stage": args.timed_target,
@@ -283,8 +232,7 @@ def initial_metrics(args: argparse.Namespace, spec: WorkloadSpec) -> dict[str, A
         "exit_status": None,
         "wall_time_seconds": None,
         "total_wall_time_seconds": None,
-        "container_peak_memory_mib": None,
-        "docker_stats_samples": [],
+        "peak_memory_mib": None,
         "time_log_path": str(args.time_log),
         "orfs_paths": {},
         "time_metrics": {},
@@ -292,57 +240,40 @@ def initial_metrics(args: argparse.Namespace, spec: WorkloadSpec) -> dict[str, A
     }
 
 
-def resolve_docker_mode(requested: str, runner: Any) -> str:
-    if requested == "direct":
-        require_command_success(["docker", "--version"], "direct docker unavailable", runner)
-        return "direct"
-    if requested == "sg":
-        require_command_success(
-            wrap_docker_command(["docker", "--version"], "sg"),
-            "sg docker unavailable",
-            runner,
-        )
-        return "sg"
-    if requested != "auto":
-        raise ValueError(f"unknown docker mode {requested!r}")
-
-    if command_succeeds(["docker", "--version"], runner):
-        return "direct"
-    if command_succeeds(wrap_docker_command(["docker", "--version"], "sg"), runner):
-        return "sg"
-    raise CommandError("docker unavailable: direct docker and sg docker both failed")
+def resolve_native_tool_env(
+    orfs_path: Path,
+    args: argparse.Namespace,
+    base_env: dict[str, str],
+) -> dict[str, str]:
+    env = build_native_tool_env(
+        base_env=base_env,
+        openroad_exe=args.openroad_exe,
+        opensta_exe=args.opensta_exe,
+        yosys_exe=args.yosys_exe,
+    )
+    fill_native_tool(env, "OPENROAD_EXE", Path(orfs_path) / DEFAULT_OPENROAD_RELATIVE, "openroad")
+    fill_native_tool(env, "OPENSTA_EXE", Path(orfs_path) / DEFAULT_OPENSTA_RELATIVE, "sta")
+    fill_native_tool(env, "YOSYS_EXE", Path(orfs_path) / DEFAULT_YOSYS_RELATIVE, "yosys")
+    return env
 
 
-def command_succeeds(command: Sequence[str], runner: Any) -> bool:
-    try:
-        result = runner.run(
-            list(command),
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-    except Exception:
-        return False
-    return result.returncode == 0
+def fill_native_tool(env: dict[str, str], env_var: str, orfs_default: Path, path_name: str) -> None:
+    if env.get(env_var):
+        return
+    if orfs_default.exists():
+        env[env_var] = str(orfs_default)
+        return
+    found = shutil.which(path_name, path=env.get("PATH"))
+    if found:
+        env[env_var] = found
 
 
-def require_command_success(command: Sequence[str], message: str, runner: Any) -> None:
-    try:
-        result = runner.run(
-            list(command),
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-    except Exception as exc:
-        raise CommandError(f"{message}: {exc}", command=command) from exc
-    if result.returncode != 0:
-        detail = (result.stderr or result.stdout or "").strip()
-        raise CommandError(
-            f"{message}: {detail}",
-            returncode=result.returncode,
-            command=command,
-        )
+def native_toolchain_metrics(env: dict[str, str]) -> dict[str, str | None]:
+    return {
+        "openroad_exe": env.get("OPENROAD_EXE"),
+        "opensta_exe": env.get("OPENSTA_EXE"),
+        "yosys_exe": env.get("YOSYS_EXE"),
+    }
 
 
 def ensure_orfs_repo(work_dir: Path, repo_url: str, commit: str, runner: Any) -> Path:
@@ -382,32 +313,13 @@ def run_checked(command: Sequence[str], runner: Any) -> subprocess.CompletedProc
     return result
 
 
-def docker_image_digest(image: str, docker_mode: str, runner: Any) -> str | None:
-    command = wrap_docker_command(
-        ["docker", "image", "inspect", "--format", "{{json .RepoDigests}}", image],
-        docker_mode,
-    )
-    try:
-        result = runner.run(
-            command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-    except Exception:
-        return None
-    if result.returncode != 0:
-        return None
-    try:
-        digests = json.loads(result.stdout.strip())
-    except json.JSONDecodeError:
-        return None
-    if isinstance(digests, list) and digests:
-        return str(digests[0])
-    return None
-
-
-def run_logged_command(command: Sequence[str], log_path: Path, title: str, runner: Any) -> None:
+def run_logged_command(
+    command: Sequence[str],
+    log_path: Path,
+    title: str,
+    env: dict[str, str],
+    runner: Any,
+) -> None:
     log_path = Path(log_path)
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with log_path.open("a") as log:
@@ -420,6 +332,7 @@ def run_logged_command(command: Sequence[str], log_path: Path, title: str, runne
                 stdout=log,
                 stderr=subprocess.STDOUT,
                 text=True,
+                env=env,
             )
         except CommandError:
             raise
@@ -435,16 +348,13 @@ def run_logged_command(command: Sequence[str], log_path: Path, title: str, runne
 
 def run_timed_command(
     command: Sequence[str],
-    docker_mode: str,
-    container_name: str,
     time_log: Path,
-    stats_interval_seconds: float,
+    env: dict[str, str],
     runner: Any,
 ) -> TimedRunResult:
     time_log = Path(time_log)
     time_log.parent.mkdir(parents=True, exist_ok=True)
     timed_command = ["/usr/bin/time", "-v", *command]
-    samples: list[dict[str, Any]] = []
     start = time.perf_counter()
 
     with time_log.open("a") as log:
@@ -457,63 +367,23 @@ def run_timed_command(
                 stdout=log,
                 stderr=subprocess.STDOUT,
                 text=True,
+                env=env,
             )
         except CommandError:
             raise
         except Exception as exc:
             raise CommandError(f"timed target failed to start: {exc}", command=timed_command) from exc
 
-        while True:
-            exit_status = process.poll()
-            sample = docker_stats_sample(container_name, docker_mode, runner)
-            if sample is not None:
-                samples.append(sample)
-            if exit_status is not None:
-                break
-            time.sleep(stats_interval_seconds)
+        exit_status = process.wait()
 
     wall_time = time.perf_counter() - start
-    peak_memory = None
-    if samples:
-        peak_memory = max(sample["memory_mib"] for sample in samples)
+    time_metrics = parse_time_v_log(time_log)
     return TimedRunResult(
         exit_status=int(exit_status),
         wall_time_seconds=wall_time,
-        docker_stats_samples=samples,
-        container_peak_memory_mib=peak_memory,
-        time_metrics=parse_time_v_log(time_log),
+        peak_memory_mib=time_metrics.get("maximum_resident_set_mib"),
+        time_metrics=time_metrics,
     )
-
-
-def docker_stats_sample(container_name: str, docker_mode: str, runner: Any) -> dict[str, Any] | None:
-    command = wrap_docker_command(
-        ["docker", "stats", "--no-stream", "--format", "{{.MemUsage}}", container_name],
-        docker_mode,
-    )
-    try:
-        result = runner.run(
-            command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            timeout=10,
-        )
-    except Exception:
-        return None
-    if result.returncode != 0:
-        return None
-    raw = result.stdout.strip().splitlines()
-    if not raw:
-        return None
-    try:
-        memory_mib = parse_memory_mib(raw[0])
-    except ValueError:
-        return None
-    return {
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
-        "memory_mib": memory_mib,
-        "raw": raw[0],
-    }
 
 
 def parse_time_v_log(path: Path) -> dict[str, Any]:
@@ -565,14 +435,9 @@ def orfs_output_paths(orfs_path: Path, design_config: Path) -> dict[str, str]:
     }
 
 
-def container_name(workload_name: str, target: str) -> str:
-    raw = f"cxl-openroad-orfs-{workload_name}-{target}-{os.getpid()}-{int(time.time())}"
-    return re.sub(r"[^a-zA-Z0-9_.-]", "-", raw)[:120]
-
-
 def main(argv: Sequence[str] | None, spec: WorkloadSpec) -> int:
     parser = argparse.ArgumentParser(
-        description=f"Run OpenROAD ORFS {spec.workload_name} stage in Docker."
+        description=f"Run OpenROAD ORFS {spec.workload_name} stage on the native host."
     )
     add_common_arguments(parser, spec)
     args = parser.parse_args(argv)

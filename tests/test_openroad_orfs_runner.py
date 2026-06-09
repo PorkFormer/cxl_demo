@@ -33,81 +33,36 @@ class OpenRoadOrfsRunnerTest(unittest.TestCase):
         self.assertEqual(args.timed_target, "do-route")
         self.assertEqual(args.output, Path("logs/openroad_orfs_route_metrics.json"))
 
-    def test_docker_command_mounts_orfs_repo_and_uses_image_toolchain(self):
-        command = common.build_docker_make_command(
+    def test_native_command_runs_make_in_orfs_flow_directory(self):
+        command = common.build_native_make_command(
             orfs_path=Path("/tmp/cxl_openroad_orfs/OpenROAD-flow-scripts"),
-            image="openroad/orfs",
-            memory="64g",
-            container_name="orfs-place-test",
             design_config=Path("designs/nangate45/aes/config.mk"),
             target="do-place",
         )
 
-        self.assertEqual(command[0:2], ["docker", "run"])
-        self.assertIn("--rm", command)
-        self.assertIn("--memory", command)
-        self.assertIn("64g", command)
-        self.assertIn(
-            "/tmp/cxl_openroad_orfs/OpenROAD-flow-scripts:/work/OpenROAD-flow-scripts",
-            command,
-        )
-        self.assertIn("-w", command)
-        self.assertIn("/work/OpenROAD-flow-scripts", command)
-        self.assertIn("openroad/orfs", command)
-        self.assertIn(
-            "OPENROAD_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad",
-            command,
-        )
-        self.assertIn(
-            "OPENSTA_EXE=/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta",
-            command,
-        )
-        self.assertIn("YOSYS_EXE=/usr/local/bin/yosys", command)
         self.assertEqual(
-            command[-5:],
+            command,
             [
                 "make",
                 "-C",
-                "flow",
+                "/tmp/cxl_openroad_orfs/OpenROAD-flow-scripts/flow",
                 "DESIGN_CONFIG=designs/nangate45/aes/config.mk",
                 "do-place",
             ],
         )
 
-    def test_sg_docker_command_wraps_quoted_docker_command(self):
-        docker_command = [
-            "docker",
-            "run",
-            "--rm",
-            "--name",
-            "orfs route test",
-            "openroad/orfs",
-            "make",
-            "DESIGN_CONFIG=designs/nangate45/aes/config.mk",
-            "do-route",
-        ]
-
-        wrapped = common.wrap_docker_command(docker_command, docker_mode="sg")
-
-        self.assertEqual(wrapped[0:3], ["sg", "docker", "-c"])
-        self.assertEqual(
-            wrapped[3],
-            "docker run --rm --name 'orfs route test' openroad/orfs make "
-            "DESIGN_CONFIG=designs/nangate45/aes/config.mk do-route",
+    def test_native_tool_env_uses_explicit_executables(self):
+        env = common.build_native_tool_env(
+            base_env={"PATH": "/usr/bin"},
+            openroad_exe=Path("/opt/or/bin/openroad"),
+            opensta_exe=Path("/opt/or/bin/sta"),
+            yosys_exe=Path("/opt/yosys/bin/yosys"),
         )
 
-    def test_parse_memory_mib_accepts_docker_stats_units(self):
-        cases = {
-            "512MiB": 512.0,
-            "1.5GiB": 1536.0,
-            "2048KiB": 2.0,
-            "1048576B": 1.0,
-            "123.25MiB / 64GiB": 123.25,
-        }
-
-        for text, expected in cases.items():
-            with self.subTest(text=text):
-                self.assertAlmostEqual(common.parse_memory_mib(text), expected)
+        self.assertEqual(env["PATH"], "/usr/bin")
+        self.assertEqual(env["OPENROAD_EXE"], "/opt/or/bin/openroad")
+        self.assertEqual(env["OPENSTA_EXE"], "/opt/or/bin/sta")
+        self.assertEqual(env["YOSYS_EXE"], "/opt/yosys/bin/yosys")
 
     def test_write_metrics_creates_parent_directory_and_json(self):
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -141,13 +96,15 @@ class OpenRoadOrfsRunnerTest(unittest.TestCase):
             self.assertEqual(metrics["design_config"], "designs/nangate45/aes/config.mk")
             self.assertEqual(metrics["bootstrap_stage"], "floorplan")
             self.assertEqual(metrics["timed_stage"], "do-place")
-            self.assertIn("docker unavailable", metrics["error"])
+            self.assertEqual(metrics["execution"]["mode"], "native")
+            self.assertNotIn("docker", metrics)
+            self.assertIn("native runner unavailable", metrics["error"])
             self.assertIsNotNone(metrics["exit_status"])
 
 
 class FailingRunner:
     def run(self, *args, **kwargs):
-        raise common.CommandError("docker unavailable")
+        raise common.CommandError("native runner unavailable")
 
 
 if __name__ == "__main__":
