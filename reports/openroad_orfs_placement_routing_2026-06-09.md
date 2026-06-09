@@ -90,6 +90,20 @@ Default native executable locations, when ORFS has been installed under the work
 /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts/tools/install/yosys/bin/yosys
 ```
 
+Local prebuilt executable locations found on this host and used for validation:
+
+```text
+/tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad
+/tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta
+/tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/yosys/bin/yosys
+```
+
+Those local binaries require:
+
+```text
+LD_LIBRARY_PATH=/tmp/openroad_rootfs/opt/or-tools/lib:/tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/OpenROAD/lib:/tmp/openroad_rootfs/usr/lib/x86_64-linux-gnu:/tmp/openroad_rootfs/lib/x86_64-linux-gnu
+```
+
 ## Metrics and Logs
 
 Placement metrics:
@@ -128,7 +142,7 @@ Each new JSON metrics file records workload name, ORFS source and commit, `execu
 
 ## Local Execution Status
 
-Implementation verification run after the native-runner change:
+Implementation verification and full native workload validation were run after the native-runner change.
 
 The native OpenROAD smoke checks used:
 
@@ -157,17 +171,54 @@ ORFS check-openroad exits 0 using native OPENROAD_EXE/OPENSTA_EXE/YOSYS_EXE
 Runner check-openroad exits 0 with execution.mode = native and full_command = /usr/bin/time -v make -C ...
 ```
 
-Full OpenROAD placement/routing was not rerun during this code change to avoid launching a multi-minute EDA workload while another user's OpenROAD job was active on the host. The native runner was verified with the lightweight `check-openroad` target using explicit host tool paths under `/tmp/openroad_rootfs`. For normal use, install ORFS tools under the work directory, put `openroad`, `sta`, and `yosys` on `PATH`, or pass explicit tool paths with the `--openroad-exe`, `--opensta-exe`, and `--yosys-exe` arguments.
+Full native OpenROAD placement and routing were rerun on 2026-06-10 using the host toolchain under `/tmp/openroad_rootfs`. The default work directory `/tmp/cxl_openroad_orfs` was not reused because its ORFS output directories contained files owned by another user. The full validation used a separate local work directory:
 
-The checked-in `logs/openroad_orfs_place_metrics.json`, `logs/openroad_orfs_route_metrics.json`, and matching `*_time.log` files are historical pre-change Docker run artifacts. They should not be used as evidence for the current native runner.
+```text
+/tmp/cxl_openroad_orfs_native_lxy_local
+```
 
-Expected new native metrics fields:
+The ORFS source was the existing local checkout at `/tmp/cxl_openroad_orfs/OpenROAD-flow-scripts`, fixed at commit `8abc6a9035ca36490a1577867addca732a87cee8`. The runner copied that checkout into the isolated work directory and ran native `make` commands directly on the host.
+
+Full placement command:
+
+```bash
+LD_LIBRARY_PATH=/tmp/openroad_rootfs/opt/or-tools/lib:/tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/OpenROAD/lib:/tmp/openroad_rootfs/usr/lib/x86_64-linux-gnu:/tmp/openroad_rootfs/lib/x86_64-linux-gnu \
+python3 scripts/run_openroad_orfs_place.py \
+  --orfs-repo /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts \
+  --work-dir /tmp/cxl_openroad_orfs_native_lxy_local \
+  --openroad-exe /tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad \
+  --opensta-exe /tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta \
+  --yosys-exe /tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/yosys/bin/yosys
+```
+
+Full routing command:
+
+```bash
+LD_LIBRARY_PATH=/tmp/openroad_rootfs/opt/or-tools/lib:/tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/OpenROAD/lib:/tmp/openroad_rootfs/usr/lib/x86_64-linux-gnu:/tmp/openroad_rootfs/lib/x86_64-linux-gnu \
+python3 scripts/run_openroad_orfs_route.py \
+  --orfs-repo /tmp/cxl_openroad_orfs/OpenROAD-flow-scripts \
+  --work-dir /tmp/cxl_openroad_orfs_native_lxy_local \
+  --openroad-exe /tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/openroad \
+  --opensta-exe /tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/OpenROAD/bin/sta \
+  --yosys-exe /tmp/openroad_rootfs/OpenROAD-flow-scripts/tools/install/yosys/bin/yosys
+```
+
+Latest native validation results:
 
 | Entrypoint | Bootstrap | Timed target | Execution mode | Peak memory source | Metrics |
 | --- | --- | --- | --- | --- | --- |
 | `openroad-orfs-place-aes` | `floorplan` | `do-place` | `native` | `/usr/bin/time -v` max RSS | `logs/openroad_orfs_place_metrics.json` |
 | `openroad-orfs-route-aes` | `cts` | `do-route` | `native` | `/usr/bin/time -v` max RSS | `logs/openroad_orfs_route_metrics.json` |
 
+Measured results:
+
+| Entrypoint | Exit status | Timed wall time | Peak RSS | Primary result |
+| --- | ---: | ---: | ---: | --- |
+| `openroad-orfs-place-aes` | 0 | 274.54 s | 496.246 MiB | `/tmp/cxl_openroad_orfs_native_lxy_local/OpenROAD-flow-scripts/flow/results/nangate45/aes/base/3_place.odb` |
+| `openroad-orfs-route-aes` | 0 | 367.69 s | 4459.609 MiB | `/tmp/cxl_openroad_orfs_native_lxy_local/OpenROAD-flow-scripts/flow/results/nangate45/aes/base/5_route.odb` |
+
+The checked-in `logs/openroad_orfs_place_metrics.json`, `logs/openroad_orfs_route_metrics.json`, and the latest appended sections in the matching `*_time.log` files now record successful native runs. Older Docker sections may still appear earlier in the append-only time logs and should be treated as historical records only.
+
 ## Caveat
 
-These entrypoints now define native workload execution and stage isolation in the repository. A full native placement/routing run still requires a usable host OpenROAD/STA/Yosys toolchain, and CXL cache evaluation still requires a representative trace window plus a separate Belady/LRU comparison.
+These entrypoints now define native workload execution and stage isolation in the repository, and the default AES placement/routing stages have been validated on the host with the available prebuilt OpenROAD/STA/Yosys binaries. CXL cache evaluation still requires a representative trace window plus a separate Belady/LRU comparison.
